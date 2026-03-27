@@ -6,1289 +6,970 @@
 <title>Vault</title>
 <style>
   :root {
-    --bg: #0a0a0f;
-    --surface: #12121a;
-    --surface2: #1a1a26;
-    --border: #2a2a3a;
-    --text: #e8e8f0;
-    --text-dim: #8888a0;
+    --bg: #0f0f13;
+    --surface: #17171d;
+    --surface2: #1e1e26;
+    --border: #2a2a36;
     --accent: #6366f1;
-    --accent-glow: rgba(99,102,241,0.15);
-    --tag-article: #3b82f6;
-    --tag-video: #ef4444;
-    --tag-tool: #10b981;
-    --tag-idea: #f59e0b;
-    --tag-reference: #8b5cf6;
-    --tag-read-later: #ec4899;
-    --tag-research: #06b6d4;
-    --tag-default: #6b7280;
-    --radius: 12px;
-    --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --accent-soft: rgba(99,102,241,0.15);
+    --text: #e8e8f0;
+    --text-dim: #6b6b7f;
+    --text-muted: #4a4a5a;
+    --tag-bg: #22223a;
+    --tag-text: #a0a0c0;
+    --transition: 0.15s ease;
+    --radius: 10px;
+    --card-min: 260px;
   }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* HEADER */
+  header { display: flex; align-items: center; justify-content: space-between; padding: 18px 28px; border-bottom: 1px solid var(--border); background: var(--surface); position: sticky; top: 0; z-index: 100; gap: 16px; flex-wrap: wrap; }
+  .logo { font-size: 18px; font-weight: 700; letter-spacing: -0.5px; color: var(--text); flex-shrink: 0; }
+  .logo span { color: var(--accent); }
+  .header-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .search-wrap { position: relative; }
+  .search-wrap input { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 13px; padding: 7px 12px 7px 32px; width: 200px; outline: none; transition: border-color var(--transition); }
+  .search-wrap input:focus { border-color: var(--accent); }
+  .search-wrap::before { content: '⌕'; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 15px; pointer-events: none; }
+  select { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 13px; padding: 7px 10px; outline: none; cursor: pointer; }
+  select:focus { border-color: var(--accent); }
+  .view-toggle { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .view-btn { background: none; border: none; padding: 7px 10px; color: var(--text-dim); cursor: pointer; font-size: 14px; transition: all var(--transition); }
+  .view-btn.active { background: var(--accent-soft); color: var(--accent); }
+  .add-btn { background: var(--accent); border: none; border-radius: 8px; color: #fff; cursor: pointer; font-size: 13px; font-weight: 600; padding: 7px 14px; transition: opacity var(--transition); flex-shrink: 0; }
+  .add-btn:hover { opacity: 0.85; }
+  .count-badge { font-size: 12px; color: var(--text-dim); }
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    line-height: 1.5;
-  }
+  /* MAIN */
+  main { padding: 24px 28px; max-width: 1600px; margin: 0 auto; }
 
-  /* Header */
-  .header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(10,10,15,0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-    padding: 16px 24px;
-  }
+  /* TAG FILTER BAR */
+  .tag-filter-bar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; align-items: center; }
+  .tag-filter-bar .tfl { font-size: 12px; color: var(--text-dim); margin-right: 4px; }
+  .filter-tag { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; color: var(--text-dim); cursor: pointer; font-size: 11px; padding: 3px 10px; transition: all var(--transition); }
+  .filter-tag:hover, .filter-tag.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+  .filter-tag.clear-all { border-color: transparent; color: var(--text-muted); }
+  .filter-tag.clear-all:hover { color: var(--text-dim); border-color: var(--border); }
 
-  .header-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
+  /* CARD GRID */
+  #card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--card-min), 1fr)); gap: 16px; }
 
-  .logo {
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    color: var(--accent);
-    flex-shrink: 0;
-  }
+  /* CARD */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; display: flex; flex-direction: column; gap: 10px; transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition); cursor: default; position: relative; }
+  .card:hover { border-color: #3a3a4e; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+  .card.dragging { opacity: 0.3; transform: scale(0.97); }
+  .card.drag-over { border-color: var(--accent) !important; box-shadow: 0 0 0 2px rgba(99,102,241,0.3); }
 
-  .logo span { color: var(--text-dim); font-weight: 400; font-size: 14px; margin-left: 8px; }
-
-  .search-box {
-    flex: 1;
-    min-width: 200px;
-    position: relative;
-  }
-
-  .search-box input {
-    width: 100%;
-    padding: 10px 16px 10px 40px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    font-size: 14px;
-    outline: none;
-    transition: border-color var(--transition);
-  }
-
-  .search-box input:focus { border-color: var(--accent); }
-
-  .search-box svg {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-dim);
-    width: 18px;
-    height: 18px;
-  }
-
-  .view-toggle {
-    display: flex;
-    gap: 4px;
-    background: var(--surface);
-    border-radius: 8px;
-    padding: 3px;
-    border: 1px solid var(--border);
-  }
-
-  .view-btn {
-    padding: 6px 12px;
-    border: none;
-    background: none;
-    color: var(--text-dim);
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 13px;
-    transition: all var(--transition);
-  }
-
-  .view-btn.active { background: var(--accent); color: white; }
-
-  .stats {
-    font-size: 13px;
-    color: var(--text-dim);
-    flex-shrink: 0;
-  }
-
-  /* Filters */
-  .filters {
-    max-width: 1200px;
-    margin: 16px auto;
-    padding: 0 24px;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-
-  .filter-chip {
-    padding: 6px 14px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text-dim);
-    font-size: 13px;
-    cursor: pointer;
-    transition: all var(--transition);
-    user-select: none;
-  }
-
-  .filter-chip:hover { border-color: var(--accent); color: var(--text); }
-  .filter-chip.active { background: var(--accent); border-color: var(--accent); color: white; }
-
-  .filter-chip .count {
-    display: inline-block;
-    margin-left: 6px;
-    padding: 1px 6px;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.15);
-    font-size: 11px;
-  }
-
-  .filter-divider {
-    width: 1px;
-    height: 24px;
-    background: var(--border);
-    margin: 0 4px;
-  }
-
-  /* Main Grid */
-  .main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 8px 24px 40px;
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 16px;
-  }
-
-  .list .grid {
-    grid-template-columns: 1fr;
-  }
-
-  /* Card */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    transition: all var(--transition);
-    position: relative;
-    overflow: hidden;
-    cursor: default;
-  }
-
-  .card:hover {
-    border-color: rgba(99,102,241,0.4);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.3), 0 0 0 1px rgba(99,102,241,0.1);
-  }
-
-  .card-type-bar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-  }
-
-  .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 10px;
-    gap: 12px;
-  }
-
-  .card-title {
-    font-size: 15px;
-    font-weight: 600;
-    line-height: 1.4;
-    color: var(--text);
-    flex: 1;
-  }
-
-  .card-title a {
-    color: inherit;
-    text-decoration: none;
-  }
-
+  .card-header { display: flex; align-items: flex-start; gap: 8px; }
+  .drag-handle { cursor: grab; color: var(--text-dim); opacity: 0; transition: opacity var(--transition); padding: 2px 4px; font-size: 16px; user-select: none; flex-shrink: 0; line-height: 1.4; }
+  .card:hover .drag-handle { opacity: 0.4; }
+  .drag-handle:hover { opacity: 1 !important; color: var(--text); }
+  .drag-handle:active { cursor: grabbing; }
+  .card-favicon { width: 20px; height: 20px; border-radius: 4px; flex-shrink: 0; object-fit: contain; margin-top: 1px; }
+  .card-title-wrap { flex: 1; min-width: 0; }
+  .card-title { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.35; word-break: break-word; }
+  .card-title a { color: inherit; text-decoration: none; }
   .card-title a:hover { color: var(--accent); }
+  .card-domain { font-size: 11px; color: var(--text-dim); margin-top: 2px; word-break: break-all; }
+  .card-actions { display: flex; gap: 6px; flex-shrink: 0; opacity: 0; transition: opacity var(--transition); }
+  .card:hover .card-actions { opacity: 1; }
+  .icon-btn { background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 14px; padding: 3px; border-radius: 5px; line-height: 1; transition: color var(--transition), background var(--transition); }
+  .icon-btn:hover { color: var(--text); background: var(--surface2); }
 
-  .card-menu-btn {
-    background: none;
-    border: none;
-    color: var(--text-dim);
-    cursor: pointer;
-    padding: 4px;
-    border-radius: 4px;
-    opacity: 0;
-    transition: opacity var(--transition);
-    flex-shrink: 0;
-  }
+  .card-note { font-size: 12px; color: var(--text-dim); background: var(--surface2); border-radius: 6px; padding: 7px 10px; line-height: 1.45; }
 
-  .card:hover .card-menu-btn { opacity: 1; }
-  .card-menu-btn:hover { background: var(--surface2); color: var(--text); }
+  /* TAGS */
+  .card-tags { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; min-height: 26px; }
+  .tag { display: inline-flex; align-items: center; gap: 4px; background: var(--tag-bg); border-radius: 10px; color: var(--tag-text); font-size: 11px; padding: 3px 8px; white-space: nowrap; }
+  .tag .tag-remove { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 12px; line-height: 1; padding: 0 1px; transition: color var(--transition); }
+  .tag .tag-remove:hover { color: #f87171; }
+  .tag-add-btn { display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 12px; font-size: 11px; background: none; border: 1px dashed var(--border); color: var(--text-muted); cursor: pointer; transition: all var(--transition); opacity: 0; }
+  .card:hover .tag-add-btn { opacity: 1; }
+  .tag-add-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .quick-tag-input-wrap { display: inline-flex; align-items: center; }
+  .quick-tag-input { width: 110px; padding: 2px 8px; border: 1px solid var(--accent); border-radius: 10px; background: var(--surface); color: var(--text); font-size: 11px; outline: none; }
 
-  .card-excerpt {
-    font-size: 13px;
-    color: var(--text-dim);
-    line-height: 1.6;
-    margin-bottom: 14px;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
+  .card-meta { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-muted); margin-top: auto; padding-top: 4px; }
+  .card-type-badge { background: var(--surface2); border-radius: 6px; padding: 2px 7px; font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
 
-  .card-url {
-    font-size: 12px;
-    color: var(--accent);
-    margin-bottom: 12px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  /* LIST VIEW */
+  #card-grid.list-view { display: flex; flex-direction: column; gap: 8px; }
+  #card-grid.list-view .card { flex-direction: row; align-items: center; padding: 12px 16px; gap: 14px; flex-wrap: wrap; }
+  #card-grid.list-view .card-header { flex: 1; min-width: 200px; }
+  #card-grid.list-view .card-tags { flex: 1; min-width: 180px; }
+  #card-grid.list-view .card-note { flex: 1; min-width: 140px; margin: 0; }
+  #card-grid.list-view .card-meta { flex-shrink: 0; }
+  #card-grid.list-view .drag-handle { opacity: 0.3; }
 
-  .card-url a { color: inherit; text-decoration: none; }
-  .card-url a:hover { text-decoration: underline; }
-
-  .card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .card-tags {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    flex: 1;
-  }
-
-  .tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 3px 10px;
-    border-radius: 12px;
-    font-size: 11px;
-    font-weight: 500;
-    text-transform: lowercase;
-    cursor: pointer;
-    transition: all var(--transition);
-  }
-
-  .tag:hover { filter: brightness(1.2); }
-
-  .tag .remove-tag {
-    display: none;
-    margin-left: 2px;
-    font-size: 14px;
-    line-height: 1;
-  }
-
-  .tag:hover .remove-tag { display: inline; }
-
-  .card-date {
-    font-size: 11px;
-    color: var(--text-dim);
-    flex-shrink: 0;
-  }
-
-  /* Tag colors */
-  .tag-article { background: rgba(59,130,246,0.15); color: var(--tag-article); }
-  .tag-video { background: rgba(239,68,68,0.15); color: var(--tag-video); }
-  .tag-tool { background: rgba(16,185,129,0.15); color: var(--tag-tool); }
-  .tag-idea { background: rgba(245,158,11,0.15); color: var(--tag-idea); }
-  .tag-reference { background: rgba(139,92,246,0.15); color: var(--tag-reference); }
-  .tag-read-later { background: rgba(236,72,153,0.15); color: var(--tag-read-later); }
-  .tag-research { background: rgba(6,182,212,0.15); color: var(--tag-research); }
-  .tag-default { background: rgba(107,114,128,0.15); color: var(--tag-default); }
-
-  /* Context Menu / Edit Modal */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    z-index: 200;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .modal-overlay.show { display: flex; }
-
-  .modal {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 24px;
-    width: 90%;
-    max-width: 500px;
-    max-height: 80vh;
-    overflow-y: auto;
-  }
-
-  .modal h3 {
-    font-size: 16px;
-    margin-bottom: 16px;
-    color: var(--text);
-  }
-
-  .modal label {
-    display: block;
-    font-size: 12px;
-    color: var(--text-dim);
-    margin-bottom: 4px;
-    margin-top: 12px;
-  }
-
-  .modal input, .modal textarea, .modal select {
-    width: 100%;
-    padding: 8px 12px;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    color: var(--text);
-    font-size: 14px;
-    font-family: inherit;
-    outline: none;
-  }
-
-  .modal input:focus, .modal textarea:focus, .modal select:focus {
-    border-color: var(--accent);
-  }
-
-  .modal textarea { resize: vertical; min-height: 60px; }
-
-  .modal-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: 20px;
-    justify-content: flex-end;
-  }
-
-  .btn {
-    padding: 8px 16px;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    background: var(--surface2);
-    color: var(--text);
-    font-size: 13px;
-    cursor: pointer;
-    transition: all var(--transition);
-  }
-
-  .btn:hover { background: var(--border); }
-  .btn-primary { background: var(--accent); border-color: var(--accent); color: white; }
-  .btn-primary:hover { filter: brightness(1.1); }
-  .btn-danger { color: #ef4444; }
-  .btn-danger:hover { background: rgba(239,68,68,0.15); }
-
-  .tag-input-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    padding: 8px;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    min-height: 40px;
-    cursor: text;
-  }
-
-  .tag-input-container:focus-within { border-color: var(--accent); }
-
-  .tag-input-container .tag { cursor: default; }
-
-  .tag-input-container input {
-    flex: 1;
-    min-width: 80px;
-    padding: 2px 4px;
-    border: none;
-    background: none;
-  }
-
-  /* Add button */
-  .add-btn {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: var(--accent);
-    border: none;
-    color: white;
-    font-size: 28px;
-    cursor: pointer;
-    box-shadow: 0 4px 20px rgba(99,102,241,0.4);
-    transition: all var(--transition);
-    z-index: 50;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .add-btn:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(99,102,241,0.5); }
-
-  /* Empty state */
-  .empty-state {
-    text-align: center;
-    padding: 80px 20px;
-    color: var(--text-dim);
-  }
-
-  .empty-state svg { width: 64px; height: 64px; margin-bottom: 16px; opacity: 0.3; }
-  .empty-state h3 { font-size: 18px; margin-bottom: 8px; color: var(--text); }
+  /* EMPTY */
+  .empty-state { text-align: center; padding: 80px 20px; color: var(--text-dim); }
+  .empty-state h3 { font-size: 18px; margin-bottom: 8px; }
   .empty-state p { font-size: 14px; }
 
-  /* Responsive */
-  @media (max-width: 640px) {
-    .header-inner { gap: 12px; }
-    .grid { grid-template-columns: 1fr; }
-    .filters { padding: 0 16px; }
-    .main { padding: 8px 16px 80px; }
-    .header { padding: 12px 16px; }
-  }
+  /* MODAL */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+  .modal-overlay.hidden { display: none; }
+  .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px; width: 100%; max-width: 480px; }
+  .modal h2 { font-size: 17px; font-weight: 700; margin-bottom: 20px; }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 12px; color: var(--text-dim); margin-bottom: 6px; font-weight: 500; }
+  .form-group input, .form-group textarea, .form-group select { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 13px; padding: 9px 12px; outline: none; transition: border-color var(--transition); font-family: inherit; }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent); }
+  .form-group textarea { resize: vertical; min-height: 70px; }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 22px; }
+  .btn-secondary { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); cursor: pointer; font-size: 13px; font-weight: 600; padding: 8px 16px; transition: border-color var(--transition); }
+  .btn-secondary:hover { border-color: var(--text-dim); }
+  .btn-primary { background: var(--accent); border: none; border-radius: 8px; color: #fff; cursor: pointer; font-size: 13px; font-weight: 600; padding: 8px 16px; transition: opacity var(--transition); }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-danger { background: #7f1d1d; border: none; border-radius: 8px; color: #fca5a5; cursor: pointer; font-size: 13px; font-weight: 600; padding: 8px 16px; transition: opacity var(--transition); margin-right: auto; }
+  .btn-danger:hover { opacity: 0.85; }
 
-  /* Scrollbar */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
-
-  /* Category selector in modal */
-  .category-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 4px;
-  }
-
-  .category-option {
-    padding: 4px 12px;
-    border-radius: 12px;
-    font-size: 12px;
-    cursor: pointer;
-    border: 1px solid var(--border);
-    background: var(--surface2);
-    color: var(--text-dim);
-    transition: all var(--transition);
-  }
-
-  .category-option:hover { border-color: var(--accent); color: var(--text); }
-  .category-option.selected { background: var(--accent); border-color: var(--accent); color: white; }
-
-  /* Favorite star */
-  .star-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    padding: 2px;
-    opacity: 0.3;
-    transition: all var(--transition);
-  }
-
-  .star-btn:hover { opacity: 0.7; }
-  .star-btn.starred { opacity: 1; }
-
-  /* Sort dropdown */
-  .sort-select {
-    padding: 6px 10px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text-dim);
-    font-size: 13px;
-    outline: none;
-    cursor: pointer;
-  }
+  .tags-input-wrap { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 7px 10px; cursor: text; }
+  .tags-input-wrap.focused { border-color: var(--accent); }
+  .tags-input-tag { display: inline-flex; align-items: center; gap: 3px; background: var(--tag-bg); border-radius: 8px; color: var(--tag-text); font-size: 11px; padding: 2px 7px; }
+  .tags-input-tag button { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 11px; line-height: 1; padding: 0; }
+  .tags-input-tag button:hover { color: #f87171; }
+  .tags-inline-input { background: none; border: none; color: var(--text); font-size: 12px; outline: none; min-width: 80px; flex: 1; }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-inner">
-    <div class="logo">Vault <span id="item-count"></span></div>
-    <div class="search-box">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-      <input type="text" id="search" placeholder="Search titles, notes, URLs, tags..." autocomplete="off">
+<header>
+  <div class="logo">⬡ <span>Vault</span></div>
+  <div class="header-controls">
+    <div class="search-wrap">
+      <input type="text" id="search-input" placeholder="Search…" oninput="render()">
     </div>
-    <select class="sort-select" id="sort-select">
-      <option value="newest">Newest first</option>
-      <option value="oldest">Oldest first</option>
-      <option value="alpha">A - Z</option>
-      <option value="starred">Starred first</option>
+    <select id="tag-filter-select" onchange="render()">
+      <option value="">All tags</option>
+    </select>
+    <select id="sort-select" onchange="render()">
+      <option value="dateAdded-desc">Newest added</option>
+      <option value="dateAdded-asc">Oldest added</option>
+      <option value="dateOfPost-desc">Post date ↓</option>
+      <option value="dateOfPost-asc">Post date ↑</option>
+      <option value="title-asc">Title A–Z</option>
+      <option value="custom">Custom order</option>
     </select>
     <div class="view-toggle">
-      <button class="view-btn active" data-view="grid">Grid</button>
-      <button class="view-btn" data-view="list">List</button>
+      <button class="view-btn active" id="btn-card" onclick="setView('card')" title="Card view">⊞</button>
+      <button class="view-btn" id="btn-list" onclick="setView('list')" title="List view">☰</button>
     </div>
+    <span class="count-badge" id="count-badge"></span>
+    <button class="add-btn" onclick="openModal()">+ Add</button>
   </div>
-</div>
+</header>
 
-<div class="filters" id="filters"></div>
+<main>
+  <div class="tag-filter-bar" id="tag-filter-bar"></div>
+  <div id="card-grid"></div>
+</main>
 
-<div class="main" id="main-container">
-  <div class="grid" id="card-grid"></div>
-</div>
-
-<!-- Edit Modal -->
-<div class="modal-overlay" id="edit-modal">
+<!-- MODAL -->
+<div class="modal-overlay hidden" id="modal-overlay">
   <div class="modal">
-    <h3 id="modal-title">Edit Item</h3>
-    <input type="hidden" id="edit-id">
-
-    <label>Title</label>
-    <input type="text" id="edit-title">
-
-    <label>URL</label>
-    <input type="text" id="edit-url">
-
-    <label>Notes</label>
-    <textarea id="edit-notes" rows="3"></textarea>
-
-    <label>Category</label>
-    <div class="category-options" id="edit-categories"></div>
-
-    <label>Tags (press Enter to add)</label>
-    <div class="tag-input-container" id="tag-input-container">
-      <input type="text" id="tag-input" placeholder="Add tag...">
+    <h2 id="modal-title">Add to Vault</h2>
+    <div class="form-group">
+      <label>URL</label>
+      <input type="url" id="modal-url" placeholder="https://…">
     </div>
-
+    <div class="form-group">
+      <label>Title</label>
+      <input type="text" id="modal-title-input" placeholder="Title">
+    </div>
+    <div class="form-group">
+      <label>Note</label>
+      <textarea id="modal-note" placeholder="Optional note…"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Type</label>
+      <select id="modal-type">
+        <option value="link">Link</option>
+        <option value="idea">Idea</option>
+        <option value="file">File</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Date of Post / Article</label>
+      <input type="date" id="modal-date-post">
+    </div>
+    <div class="form-group">
+      <label>Tags</label>
+      <div class="tags-input-wrap" id="tags-input-wrap" onclick="document.getElementById('tags-inline-input').focus()">
+        <input class="tags-inline-input" id="tags-inline-input" placeholder="Type tag, press Enter…" maxlength="40">
+      </div>
+    </div>
     <div class="modal-actions">
-      <button class="btn btn-danger" id="delete-btn" onclick="deleteItem()">Delete</button>
-      <div style="flex:1"></div>
-      <button class="btn" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-primary" onclick="saveEdit()">Save</button>
+      <button class="btn-danger" id="modal-delete-btn" onclick="deleteItem()" style="display:none">Delete</button>
+      <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveItem()">Save</button>
     </div>
   </div>
 </div>
-
-<!-- Add Manual Item Modal -->
-<div class="modal-overlay" id="add-modal">
-  <div class="modal">
-    <h3>Add Item</h3>
-
-    <label>Title</label>
-    <input type="text" id="add-title">
-
-    <label>URL (optional)</label>
-    <input type="text" id="add-url">
-
-    <label>Notes (optional)</label>
-    <textarea id="add-notes" rows="3"></textarea>
-
-    <label>Category</label>
-    <div class="category-options" id="add-categories"></div>
-
-    <label>Tags (press Enter to add)</label>
-    <div class="tag-input-container" id="add-tag-container">
-      <input type="text" id="add-tag-input" placeholder="Add tag...">
-    </div>
-
-    <div class="modal-actions">
-      <button class="btn" onclick="closeAddModal()">Cancel</button>
-      <button class="btn btn-primary" onclick="saveNewItem()">Add</button>
-    </div>
-  </div>
-</div>
-
-<button class="add-btn" onclick="openAddModal()" title="Add item manually">+</button>
 
 <script>
-// ============================================================
-// DATA STORE - This is where the scheduled task injects items
-// ============================================================
-const VAULT_DATA = {
-  "items": [
-    {
-      "id": "email-19d30db9ba82c475",
-      "title": "Post by Ben Johnson, CFA on X",
-      "url": "https://x.com/mstarbenjohnson/status/2037571241872093625?s=43",
-      "notes": null,
-      "category": "reference",
-      "tags": [],
-      "date": "2026-03-27T12:53:08-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d30db5ce639a8a",
-      "title": "Post by Kieran Goodwin on X",
-      "url": "https://x.com/kieranwgoodwin/status/2037551988217426126?s=43",
-      "notes": null,
-      "category": "reference",
-      "tags": [],
-      "date": "2026-03-27T12:52:51-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d2f9ff9007b54e",
-      "title": "Post by Google AI Studio on X",
-      "url": "https://x.com/googleaistudio/status/2037190639021154820?s=43",
-      "notes": null,
-      "category": "reference",
-      "tags": [],
-      "date": "2026-03-27T07:08:22-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d2c76d7b66c985",
-      "title": "Post by Matt Gottshall, CFP®, ECA on X",
-      "url": "https://x.com/matt_gottshall/status/2037161742690574473?s=43",
-      "notes": null,
-      "category": "reference",
-      "tags": [],
-      "date": "2026-03-26T16:24:34-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d2c72359afab7b",
-      "title": "Post by Mistral AI on X",
-      "url": "https://x.com/mistralai/status/2037183026539483288?s=43",
-      "notes": "How can we incorporate this into Mina?",
-      "category": "reference",
-      "tags": [],
-      "date": "2026-03-26T16:19:30-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d2b7ee147aa554",
-      "title": "Post by el.cine on X CapCut video editing ai",
-      "url": "https://x.com/ehuanglu/status/2036949499898454344?s=43",
-      "notes": null,
-      "category": "reference",
-      "tags": [],
-      "date": "2026-03-26T11:53:43-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d2b79e207fa571",
-      "title": "Pre-tax alpha AQR Direct Indexing Long Short",
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6438799",
-      "notes": null,
-      "category": "research",
-      "tags": [],
-      "date": "2026-03-26T11:48:07-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d27202318504ec",
-      "title": "Post by Simon B. Støvring on X",
-      "url": "https://x.com/simonbs/status/2036798027990474790?s=43",
-      "notes": "Claude tool",
-      "category": "reference",
-      "tags": [],
-      "date": "2026-03-25T15:31:47-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d271f46ed1b2f4",
-      "title": "Link to save",
-      "url": "https://apnews.com",
-      "notes": "Trump administration offers 15-point ceasefire plan to Iran",
-      "category": "article",
-      "tags": [],
-      "date": "2026-03-25T15:30:44-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d2716fb2776e95",
-      "title": "Post by JJ Englert on X",
-      "url": "https://x.com/jjenglert/status/2036892413289996449?s=43",
-      "notes": null,
-      "category": "reference",
-      "tags": [],
-      "date": "2026-03-25T15:21:45-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d25ece8608bea5",
-      "title": "Post by Millie Marconi on X",
-      "url": "https://x.com/milliemarconnni/status/2036363493478375797?s=43",
-      "notes": null,
-      "category": "reference",
-      "tags": [],
-      "date": "2026-03-25T09:56:13-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d2596901d27d99",
-      "title": "Tax-aware share research",
-      "url": "https://www.linkedin.com/posts/new-research-explores-a-key-question-in-tax-aware-share-7440774221699387392-pwd5",
-      "notes": null,
-      "category": "reference",
-      "tags": [],
-      "date": "2026-03-25T08:21:52-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d23310a616bd5e",
-      "title": "Post by Renoise on X",
-      "url": "https://x.com/renoiseai/status/2036089896503529521?s=43",
-      "notes": null,
-      "category": "reference",
-      "tags": [],
-      "date": "2026-03-24T21:11:47-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d23306f83dfb7e",
-      "title": "Post by Spline on X",
-      "url": "https://x.com/splinetool/status/2036517448112021863?s=43",
-      "notes": null,
-      "category": "reference",
-      "tags": [],
-      "date": "2026-03-24T21:11:06-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d23105d7a7def9",
-      "title": "The Complete Guide to Building Your Free Local AI Assistant with Ollama and Open WebUI",
-      "url": "https://www.reddit.com/r/selfhosted/s/vumaDvfzVe",
-      "notes": null,
-      "category": "article",
-      "tags": [],
-      "date": "2026-03-24T20:36:04-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d1b74cd32a1ab2",
-      "title": "Post by Akshay on X",
-      "url": "https://x.com/akshay_pachaar/status/2035986229687451723?s=43",
-      "notes": null,
-      "category": "reference",
-      "tags": [],
-      "date": "2026-03-23T09:08:50-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d1b143a796099b",
-      "title": "Post by MichaelKitces on X",
-      "url": "https://x.com/michaelkitces/status/2035854079281217580?s=43",
-      "notes": null,
-      "category": "reference",
-      "tags": [],
-      "date": "2026-03-23T07:23:18-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d18828f0267023",
-      "title": "Post by Vishakha Singhal on X",
-      "url": "https://x.com/vishisinghal_/status/2035625802415698184?s=43",
-      "notes": null,
-      "category": "reference",
-      "tags": [],
-      "date": "2026-03-22T19:24:59-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d185937a9be856",
-      "title": "Post by Corey Ganim on X",
-      "url": "https://x.com/coreyganim/status/2035827178131116160?s=43",
-      "notes": null,
-      "category": "reference",
-      "tags": [],
-      "date": "2026-03-22T18:39:50-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d1857618b895a7",
-      "title": "Post by Carlos Villuendas on X",
-      "url": "https://x.com/carlosvillu/status/2035627562215334254?s=43",
-      "notes": null,
-      "category": "reference",
-      "tags": [],
-      "date": "2026-03-22T18:37:48-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d17d7ee97e4bd7",
-      "title": "Post by Hasan Toor on X",
-      "url": "https://x.com/hasantoxr/status/2035312729427480840?s=43",
-      "notes": null,
-      "category": "reference",
-      "tags": [],
-      "date": "2026-03-22T16:18:37-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d116bef9fc9d49",
-      "title": "Post by Ihtesham Ali on X",
-      "url": "https://x.com/ihtesham2005/status/2035325595048083663?s=43",
-      "notes": null,
-      "category": "reference",
-      "tags": [],
-      "date": "2026-03-21T10:22:53-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d1146f51f555eb",
-      "title": "Post by Akshay on X",
-      "url": "https://x.com/akshay_pachaar/status/2035341800739877091?s=43",
-      "notes": null,
-      "category": "reference",
-      "tags": [],
-      "date": "2026-03-21T09:42:30-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d1134f7dac01f2",
-      "title": "Hostinger",
-      "url": null,
-      "notes": null,
-      "category": "idea",
-      "tags": [],
-      "date": "2026-03-21T09:22:41-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d10ea1e147d506",
-      "title": "Ideogram",
-      "url": "https://ideogram.ai/t/explore",
-      "notes": null,
-      "category": "article",
-      "tags": [],
-      "date": "2026-03-21T08:01:06-07:00",
-      "starred": false,
-      "source": "email"
-    },
-    {
-      "id": "email-19d10e10a24d6d69",
-      "title": "Post by darkzodchi on X",
-      "url": "https://x.com/zodchiii/status/2034924354337714642?s=43",
-      "notes": null,
-      "category": "reference",
-      "tags": [],
-      "date": "2026-03-21T07:51:10-07:00",
-      "starred": false,
-      "source": "email"
-    }
-  ],
-  "lastUpdated": "2026-03-27T20:08:36.285Z"
-};
-
-// ============================================================
-// CATEGORIES
-// ============================================================
-const CATEGORIES = [
-  { id: 'article', label: 'Article', color: 'var(--tag-article)' },
-  { id: 'video', label: 'Video', color: 'var(--tag-video)' },
-  { id: 'tool', label: 'Tool', color: 'var(--tag-tool)' },
-  { id: 'idea', label: 'Idea', color: 'var(--tag-idea)' },
-  { id: 'reference', label: 'Reference', color: 'var(--tag-reference)' },
-  { id: 'read-later', label: 'Read Later', color: 'var(--tag-read-later)' },
-  { id: 'research', label: 'Research', color: 'var(--tag-research)' },
+// ─── DATA ────────────────────────────────────────────────────────────────────
+let items = [
+  {
+    "id": "1",
+    "title": "Matt Gottshall CFP",
+    "url": "https://x.com/MGottshallCFP",
+    "type": "link",
+    "note": "",
+    "dateAdded": "2025-03-01",
+    "dateOfPost": "",
+    "tags": [
+      "Financial Planning",
+      "CFP",
+      "Wealth Management"
+    ]
+  },
+  {
+    "id": "2",
+    "title": "Mistral AI",
+    "url": "https://x.com/MistralAI",
+    "type": "link",
+    "note": "How can we incorporate this into Mina?",
+    "dateAdded": "2025-03-02",
+    "dateOfPost": "",
+    "tags": [
+      "AI",
+      "LLM",
+      "Mistral",
+      "Product Development"
+    ]
+  },
+  {
+    "id": "3",
+    "title": "el.cine \u2013 CapCut AI video editing",
+    "url": "https://x.com/elcine_app",
+    "type": "link",
+    "note": "",
+    "dateAdded": "2025-03-03",
+    "dateOfPost": "",
+    "tags": [
+      "AI Tools",
+      "Video Editing",
+      "Content Creation"
+    ]
+  },
+  {
+    "id": "4",
+    "title": "AQR Direct Indexing & Factor Investing (SSRN)",
+    "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3464015",
+    "type": "link",
+    "note": "",
+    "dateAdded": "2025-03-04",
+    "dateOfPost": "",
+    "tags": [
+      "Investments",
+      "Alternative Investments",
+      "AQR",
+      "Direct Indexing",
+      "Tax Strategy",
+      "Factor Investing"
+    ]
+  },
+  {
+    "id": "5",
+    "title": "Simon St\u00f8vring",
+    "url": "https://x.com/simonbs",
+    "type": "link",
+    "note": "Claude tool",
+    "dateAdded": "2025-03-05",
+    "dateOfPost": "",
+    "tags": [
+      "AI",
+      "Claude",
+      "Developer Tools",
+      "Automation"
+    ]
+  },
+  {
+    "id": "6",
+    "title": "AP News \u2013 Iran Ceasefire",
+    "url": "https://apnews.com",
+    "type": "link",
+    "note": "Trump administration offers 15-point ceasefire plan to Iran",
+    "dateAdded": "2025-03-06",
+    "dateOfPost": "",
+    "tags": [
+      "Geopolitics",
+      "Middle East",
+      "Iran",
+      "Foreign Policy"
+    ]
+  },
+  {
+    "id": "7",
+    "title": "JJ Englert \u2013 AI & No-Code",
+    "url": "https://x.com/jjenglert",
+    "type": "link",
+    "note": "",
+    "dateAdded": "2025-03-07",
+    "dateOfPost": "",
+    "tags": [
+      "AI",
+      "No-Code",
+      "Entrepreneurship"
+    ]
+  },
+  {
+    "id": "8",
+    "title": "Millie Marconi \u2013 Yesterday / TestFeed",
+    "url": "https://x.com/milliemarconi",
+    "type": "link",
+    "note": "",
+    "dateAdded": "2025-03-08",
+    "dateOfPost": "",
+    "tags": [
+      "AI",
+      "Content Creation",
+      "Startups"
+    ]
+  },
+  {
+    "id": "9",
+    "title": "Tax-Aware Share Research",
+    "url": "https://www.linkedin.com",
+    "type": "link",
+    "note": "Tax-aware share research LinkedIn",
+    "dateAdded": "2025-03-09",
+    "dateOfPost": "",
+    "tags": [
+      "Investments",
+      "Tax Strategy",
+      "Research",
+      "Portfolio Management"
+    ]
+  },
+  {
+    "id": "10",
+    "title": "Renoise",
+    "url": "https://www.renoise.com",
+    "type": "link",
+    "note": "",
+    "dateAdded": "2025-03-10",
+    "dateOfPost": "",
+    "tags": [
+      "Music Production",
+      "AI",
+      "Creative Tools"
+    ]
+  },
+  {
+    "id": "11",
+    "title": "Spline \u2013 3D Design",
+    "url": "https://spline.design",
+    "type": "link",
+    "note": "",
+    "dateAdded": "2025-03-11",
+    "dateOfPost": "",
+    "tags": [
+      "3D Design",
+      "Design Tools",
+      "Creative Tools"
+    ]
+  },
+  {
+    "id": "12",
+    "title": "Reddit \u2013 Ollama Local AI Guide",
+    "url": "https://reddit.com",
+    "type": "link",
+    "note": "",
+    "dateAdded": "2025-03-12",
+    "dateOfPost": "",
+    "tags": [
+      "AI",
+      "Self-Hosted",
+      "Local AI",
+      "Ollama"
+    ]
+  },
+  {
+    "id": "13",
+    "title": "Akshay \u2013 ML & Python Tips",
+    "url": "https://x.com/akshay_pachaar",
+    "type": "link",
+    "note": "Mar 23",
+    "dateAdded": "2025-03-23",
+    "dateOfPost": "2025-03-23",
+    "tags": [
+      "AI",
+      "Machine Learning",
+      "Python",
+      "Data Science"
+    ]
+  },
+  {
+    "id": "14",
+    "title": "Michael Kitces \u2013 Financial Planning",
+    "url": "https://x.com/MichaelKitces",
+    "type": "link",
+    "note": "",
+    "dateAdded": "2025-03-14",
+    "dateOfPost": "",
+    "tags": [
+      "Financial Planning",
+      "Wealth Management",
+      "Advisor Tech"
+    ]
+  },
+  {
+    "id": "15",
+    "title": "Vishakha Singhal \u2013 AI Productivity",
+    "url": "https://x.com/vishakha_s_",
+    "type": "link",
+    "note": "",
+    "dateAdded": "2025-03-15",
+    "dateOfPost": "",
+    "tags": [
+      "AI",
+      "ChatGPT",
+      "Productivity"
+    ]
+  },
+  {
+    "id": "16",
+    "title": "Corey Ganim \u2013 Amazon & AI Automation",
+    "url": "https://x.com/CoreyGanim",
+    "type": "link",
+    "note": "",
+    "dateAdded": "2025-03-16",
+    "dateOfPost": "",
+    "tags": [
+      "E-Commerce",
+      "Amazon",
+      "AI",
+      "Business Automation"
+    ]
+  },
+  {
+    "id": "17",
+    "title": "Carlos Villuendas \u2013 Frontend Engineering",
+    "url": "https://x.com/carlosv_dev",
+    "type": "link",
+    "note": "",
+    "dateAdded": "2025-03-17",
+    "dateOfPost": "",
+    "tags": [
+      "Web Development",
+      "JavaScript",
+      "React"
+    ]
+  },
+  {
+    "id": "18",
+    "title": "Hasan Toor \u2013 AI Education",
+    "url": "https://x.com/hasantoxr",
+    "type": "link",
+    "note": "",
+    "dateAdded": "2025-03-18",
+    "dateOfPost": "",
+    "tags": [
+      "AI",
+      "Tech Education",
+      "AI Tools"
+    ]
+  },
+  {
+    "id": "19",
+    "title": "Ihtesham Ali \u2013 Open-Source AI",
+    "url": "https://x.com/ihtesham_ai",
+    "type": "link",
+    "note": "",
+    "dateAdded": "2025-03-19",
+    "dateOfPost": "",
+    "tags": [
+      "AI",
+      "Open Source",
+      "Developer Tools",
+      "AI Agents"
+    ]
+  },
+  {
+    "id": "20",
+    "title": "Akshay \u2013 AI Agents & Skill Graphs",
+    "url": "https://x.com/akshay_pachaar",
+    "type": "link",
+    "note": "Mar 21",
+    "dateAdded": "2025-03-21",
+    "dateOfPost": "2025-03-21",
+    "tags": [
+      "AI",
+      "AI Agents",
+      "Developer Tools",
+      "LLM"
+    ]
+  },
+  {
+    "id": "21",
+    "title": "Hostinger \u2013 Web Hosting Idea",
+    "url": "",
+    "type": "idea",
+    "note": "Hostinger",
+    "dateAdded": "2025-03-20",
+    "dateOfPost": "",
+    "tags": [
+      "Web Hosting",
+      "Business",
+      "Idea"
+    ]
+  },
+  {
+    "id": "22",
+    "title": "Ideogram \u2013 AI Image Generation",
+    "url": "https://ideogram.ai",
+    "type": "link",
+    "note": "",
+    "dateAdded": "2025-03-22",
+    "dateOfPost": "",
+    "tags": [
+      "AI",
+      "Image Generation",
+      "Design",
+      "Creative Tools"
+    ]
+  },
+  {
+    "id": "23",
+    "title": "darKzodchi \u2013 AI Design",
+    "url": "https://x.com/darKzodchi",
+    "type": "link",
+    "note": "",
+    "dateAdded": "2025-03-24",
+    "dateOfPost": "",
+    "tags": [
+      "AI",
+      "Design",
+      "Creative Tools"
+    ]
+  }
 ];
 
-// ============================================================
-// STATE
-// ============================================================
-let items = [...VAULT_DATA.items];
-let activeCategory = 'all';
-let activeTags = [];
-let currentView = 'grid';
-let editingTags = [];
-let addingTags = [];
-let addCategory = 'article';
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let currentView = 'card';
+let customOrder = null;
+let dragSrcId = null;
+let editingId = null;
+let activeTagFilter = '';
+let modalTags = [];
 
-// Load local overrides (edits, manual adds, deletes)
-function loadLocalOverrides() {
-  // We store overrides in the data itself via the JSON
-  // For client-side edits between syncs, use in-memory state
+// ─── UTILS ───────────────────────────────────────────────────────────────────
+function getDomain(url) {
+  try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return ''; }
 }
 
-// ============================================================
-// RENDER
-// ============================================================
-function getTagClass(tag) {
-  const t = tag.toLowerCase().replace(/[^a-z-]/g, '');
-  const cat = CATEGORIES.find(c => c.id === t);
-  return cat ? `tag-${t}` : 'tag-default';
+function getFaviconUrl(url) {
+  const domain = getDomain(url);
+  if (!domain) return '';
+  return `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
 }
 
-function getTypeBarColor(category) {
-  const cat = CATEGORIES.find(c => c.id === category);
-  return cat ? cat.color : 'var(--tag-default)';
+function formatDate(d) {
+  if (!d) return '';
+  const [y, m, day] = d.split('-');
+  if (!y || !m || !day) return d;
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${months[parseInt(m)-1]} ${parseInt(day)}, ${y}`;
 }
 
-function renderFilters() {
-  const container = document.getElementById('filters');
-  const catCounts = { all: items.length };
-  const tagCounts = {};
-
-  items.forEach(item => {
-    catCounts[item.category] = (catCounts[item.category] || 0) + 1;
-    (item.tags || []).forEach(t => {
-      tagCounts[t] = (tagCounts[t] || 0) + 1;
-    });
-  });
-
-  let html = `<div class="filter-chip ${activeCategory === 'all' ? 'active' : ''}" onclick="filterCategory('all')">All <span class="count">${catCounts.all}</span></div>`;
-
-  CATEGORIES.forEach(cat => {
-    if (catCounts[cat.id]) {
-      html += `<div class="filter-chip ${activeCategory === cat.id ? 'active' : ''}" onclick="filterCategory('${cat.id}')">${cat.label} <span class="count">${catCounts[cat.id]}</span></div>`;
-    }
-  });
-
-  const uniqueTags = Object.keys(tagCounts).sort();
-  if (uniqueTags.length > 0) {
-    html += `<div class="filter-divider"></div>`;
-    uniqueTags.forEach(tag => {
-      const isActive = activeTags.includes(tag);
-      html += `<div class="filter-chip ${isActive ? 'active' : ''}" onclick="toggleTag('${tag}')">#${tag} <span class="count">${tagCounts[tag]}</span></div>`;
-    });
-  }
-
-  container.innerHTML = html;
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+function generateId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+}
+
+// ─── FILTER / SORT ───────────────────────────────────────────────────────────
 function getFiltered() {
-  const query = document.getElementById('search').value.toLowerCase().trim();
+  const q = document.getElementById('search-input').value.trim().toLowerCase();
+  const sort = document.getElementById('sort-select').value;
+
   let filtered = items.filter(item => {
-    if (activeCategory !== 'all' && item.category !== activeCategory) return false;
-    if (activeTags.length > 0 && !activeTags.every(t => (item.tags || []).includes(t))) return false;
-    if (query) {
-      const searchable = [item.title, item.notes, item.url, ...(item.tags || []), item.category].join(' ').toLowerCase();
-      return searchable.includes(query);
-    }
-    return true;
+    const matchesSearch = !q || [item.title, item.url, item.note, ...(item.tags||[])].some(v => v && v.toLowerCase().includes(q));
+    const matchesTag = !activeTagFilter || (item.tags||[]).includes(activeTagFilter);
+    return matchesSearch && matchesTag;
   });
 
-  const sort = document.getElementById('sort-select').value;
-  filtered.sort((a, b) => {
-    if (sort === 'starred') {
-      if (a.starred && !b.starred) return -1;
-      if (!a.starred && b.starred) return 1;
+  if (sort === 'custom') {
+    if (customOrder) {
+      filtered.sort((a, b) => {
+        const ai = customOrder.indexOf(a.id);
+        const bi = customOrder.indexOf(b.id);
+        if (ai === -1) return 1;
+        if (bi === -1) return -1;
+        return ai - bi;
+      });
     }
-    if (sort === 'oldest') return new Date(a.date) - new Date(b.date);
-    if (sort === 'alpha') return (a.title || '').localeCompare(b.title || '');
-    return new Date(b.date) - new Date(a.date);
-  });
+  } else if (sort === 'dateAdded-desc') {
+    filtered.sort((a, b) => (b.dateAdded || '').localeCompare(a.dateAdded || ''));
+  } else if (sort === 'dateAdded-asc') {
+    filtered.sort((a, b) => (a.dateAdded || '').localeCompare(b.dateAdded || ''));
+  } else if (sort === 'dateOfPost-desc') {
+    filtered.sort((a, b) => (b.dateOfPost || '').localeCompare(a.dateOfPost || ''));
+  } else if (sort === 'dateOfPost-asc') {
+    filtered.sort((a, b) => (a.dateOfPost || '').localeCompare(b.dateOfPost || ''));
+  } else if (sort === 'title-asc') {
+    filtered.sort((a, b) => a.title.localeCompare(b.title));
+  }
 
   return filtered;
 }
 
-function renderCards() {
-  const grid = document.getElementById('card-grid');
+// ─── TAG FILTER BAR ──────────────────────────────────────────────────────────
+function buildTagFilterBar() {
+  const allTags = {};
+  items.forEach(item => (item.tags||[]).forEach(t => { allTags[t] = (allTags[t]||0) + 1; }));
+  const sorted = Object.entries(allTags).sort((a,b) => b[1]-a[1]).map(e=>e[0]);
+
+  const bar = document.getElementById('tag-filter-bar');
+  if (!sorted.length) { bar.innerHTML = ''; return; }
+
+  let html = '<span class="tfl">Filter:</span>';
+  if (activeTagFilter) {
+    html += `<button class="filter-tag clear-all" onclick="clearTagFilter()">✕ Clear</button>`;
+  }
+  sorted.forEach(tag => {
+    const active = activeTagFilter === tag ? ' active' : '';
+    html += `<button class="filter-tag${active}" onclick="setTagFilter('${escHtml(tag)}')">${escHtml(tag)}</button>`;
+  });
+
+  // also populate tag filter select
+  const sel = document.getElementById('tag-filter-select');
+  const prev = sel.value;
+  sel.innerHTML = '<option value="">All tags</option>';
+  sorted.forEach(tag => {
+    const opt = document.createElement('option');
+    opt.value = tag;
+    opt.textContent = tag;
+    if (tag === activeTagFilter) opt.selected = true;
+    sel.appendChild(opt);
+  });
+
+  bar.innerHTML = html;
+}
+
+function setTagFilter(tag) {
+  activeTagFilter = activeTagFilter === tag ? '' : tag;
+  document.getElementById('tag-filter-select').value = activeTagFilter;
+  render();
+}
+
+function clearTagFilter() {
+  activeTagFilter = '';
+  document.getElementById('tag-filter-select').value = '';
+  render();
+}
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+function render() {
+  // sync tag filter select → activeTagFilter
+  const selVal = document.getElementById('tag-filter-select').value;
+  if (selVal !== activeTagFilter && selVal !== undefined) {
+    activeTagFilter = selVal;
+  }
+
+  buildTagFilterBar();
   const filtered = getFiltered();
+  const grid = document.getElementById('card-grid');
 
-  document.getElementById('item-count').textContent = `${filtered.length} item${filtered.length !== 1 ? 's' : ''}`;
+  document.getElementById('count-badge').textContent = `${filtered.length} item${filtered.length !== 1 ? 's' : ''}`;
 
-  if (filtered.length === 0) {
-    grid.innerHTML = `
-      <div class="empty-state" style="grid-column: 1/-1;">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-2.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" /></svg>
-        <h3>Nothing here yet</h3>
-        <p>Send an email to claude4mtl@gmail.com to save links, videos, and ideas.</p>
-      </div>`;
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="empty-state"><h3>Nothing here yet</h3><p>Add some links, ideas, or files to your vault.</p></div>';
     return;
   }
 
-  grid.innerHTML = filtered.map(item => {
-    const tags = (item.tags || []).map(t =>
-      `<span class="tag ${getTagClass(t)}" onclick="event.stopPropagation(); toggleTag('${t}')">${t}<span class="remove-tag" onclick="event.stopPropagation(); removeTagFromItem('${item.id}', '${t}')">&times;</span></span>`
-    ).join('');
-
-    const barColor = getTypeBarColor(item.category);
-    const starClass = item.starred ? 'starred' : '';
-    const starSymbol = item.starred ? '\u2605' : '\u2606';
-    const domain = item.url ? new URL(item.url).hostname.replace('www.', '') : '';
-    const urlLine = item.url ? `<div class="card-url"><a href="${item.url}" target="_blank" rel="noopener">${domain}</a></div>` : '';
-    const dateStr = item.date ? new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
-
-    return `
-      <div class="card" ondblclick="openEdit('${item.id}')">
-        <div class="card-type-bar" style="background:${barColor}"></div>
-        <div class="card-header">
-          <div class="card-title">${item.url ? `<a href="${item.url}" target="_blank" rel="noopener">${escHtml(item.title)}</a>` : escHtml(item.title)}</div>
-          <button class="star-btn ${starClass}" onclick="event.stopPropagation(); toggleStar('${item.id}')">${starSymbol}</button>
-          <button class="card-menu-btn" onclick="event.stopPropagation(); openEdit('${item.id}')" title="Edit">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
-          </button>
-        </div>
-        ${item.notes ? `<div class="card-excerpt">${escHtml(item.notes)}</div>` : ''}
-        ${urlLine}
-        <div class="card-footer">
-          <div class="card-tags">${tags}</div>
-          <div class="card-date">${dateStr}</div>
-        </div>
-      </div>`;
-  }).join('');
+  grid.innerHTML = filtered.map(item => renderCard(item)).join('');
+  initDragDrop();
 }
 
-function render() {
-  renderFilters();
-  renderCards();
-}
+function renderCard(item) {
+  const domain = getDomain(item.url);
+  const favicon = item.url ? `<img class="card-favicon" src="${getFaviconUrl(item.url)}" onerror="this.style.display='none'" alt="">` : '';
+  const titleContent = item.url
+    ? `<a href="${escHtml(item.url)}" target="_blank" rel="noopener">${escHtml(item.title)}</a>`
+    : escHtml(item.title);
+  const domainEl = domain ? `<div class="card-domain">${escHtml(domain)}</div>` : '';
+  const noteEl = item.note ? `<div class="card-note">${escHtml(item.note)}</div>` : '';
 
-// ============================================================
-// INTERACTIONS
-// ============================================================
-function filterCategory(cat) {
-  activeCategory = cat;
-  render();
-}
-
-function toggleTag(tag) {
-  const idx = activeTags.indexOf(tag);
-  if (idx >= 0) activeTags.splice(idx, 1);
-  else activeTags.push(tag);
-  render();
-}
-
-function toggleStar(id) {
-  const item = items.find(i => i.id === id);
-  if (item) { item.starred = !item.starred; render(); }
-}
-
-function removeTagFromItem(id, tag) {
-  const item = items.find(i => i.id === id);
-  if (item) {
-    item.tags = (item.tags || []).filter(t => t !== tag);
-    render();
-  }
-}
-
-// Edit modal
-function openEdit(id) {
-  const item = items.find(i => i.id === id);
-  if (!item) return;
-
-  document.getElementById('edit-id').value = id;
-  document.getElementById('edit-title').value = item.title || '';
-  document.getElementById('edit-url').value = item.url || '';
-  document.getElementById('edit-notes').value = item.notes || '';
-  editingTags = [...(item.tags || [])];
-
-  renderEditCategories(item.category);
-  renderEditTags();
-  document.getElementById('edit-modal').classList.add('show');
-}
-
-function renderEditCategories(selected) {
-  const container = document.getElementById('edit-categories');
-  container.innerHTML = CATEGORIES.map(c =>
-    `<div class="category-option ${c.id === selected ? 'selected' : ''}" onclick="selectEditCategory(this, '${c.id}')">${c.label}</div>`
+  const tagsHtml = (item.tags||[]).map(tag =>
+    `<span class="tag">${escHtml(tag)}<button class="tag-remove" onclick="removeTag('${escHtml(item.id)}','${escHtml(tag)}')" title="Remove tag">×</button></span>`
   ).join('');
+
+  const dateDisplay = item.dateOfPost
+    ? `Post: ${formatDate(item.dateOfPost)}`
+    : (item.dateAdded ? `Added: ${formatDate(item.dateAdded)}` : '');
+
+  return `
+<div class="card" data-id="${escHtml(item.id)}" draggable="true">
+  <div class="card-header">
+    <span class="drag-handle" title="Drag to reorder">⠿</span>
+    ${favicon}
+    <div class="card-title-wrap">
+      <div class="card-title">${titleContent}</div>
+      ${domainEl}
+    </div>
+    <div class="card-actions">
+      <button class="icon-btn" onclick="openModal('${escHtml(item.id)}')" title="Edit">✎</button>
+    </div>
+  </div>
+  ${noteEl}
+  <div class="card-tags">
+    ${tagsHtml}
+    <button class="tag-add-btn" onclick="openQuickTag('${escHtml(item.id)}')" title="Add tag">+ tag</button>
+  </div>
+  <div class="card-meta">
+    <span>${escHtml(dateDisplay)}</span>
+    <span class="card-type-badge">${escHtml(item.type||'link')}</span>
+  </div>
+</div>`;
 }
 
-function selectEditCategory(el, catId) {
-  el.parentElement.querySelectorAll('.category-option').forEach(e => e.classList.remove('selected'));
-  el.classList.add('selected');
+// ─── QUICK TAG ────────────────────────────────────────────────────────────────
+function openQuickTag(itemId) {
+  const card = document.querySelector(`[data-id="${itemId}"]`);
+  if (!card) return;
+  const tagsEl = card.querySelector('.card-tags');
+  const existing = tagsEl.querySelector('.quick-tag-input-wrap');
+  if (existing) { existing.remove(); return; }
+
+  const wrap = document.createElement('div');
+  wrap.className = 'quick-tag-input-wrap';
+  wrap.innerHTML = `<input class="quick-tag-input" type="text" placeholder="tag name…" maxlength="40">`;
+
+  // Insert before the add button
+  const addBtn = tagsEl.querySelector('.tag-add-btn');
+  tagsEl.insertBefore(wrap, addBtn);
+
+  const input = wrap.querySelector('input');
+  input.focus();
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const tag = input.value.trim().replace(/^#/, '');
+      if (tag) {
+        const item = items.find(i => i.id === itemId);
+        if (item) {
+          if (!item.tags) item.tags = [];
+          if (!item.tags.includes(tag)) item.tags.push(tag);
+        }
+      }
+      render();
+    } else if (e.key === 'Escape') {
+      render();
+    }
+  });
+
+  input.addEventListener('blur', () => setTimeout(() => {
+    if (document.querySelector(`[data-id="${itemId}"] .quick-tag-input-wrap`)) render();
+  }, 200));
 }
 
-function renderEditTags() {
-  const container = document.getElementById('tag-input-container');
-  const input = document.getElementById('tag-input');
-  container.querySelectorAll('.tag').forEach(t => t.remove());
-  editingTags.forEach(tag => {
-    const span = document.createElement('span');
-    span.className = `tag ${getTagClass(tag)}`;
-    span.innerHTML = `${tag} <span class="remove-tag" style="display:inline;cursor:pointer" onclick="removeEditTag('${tag}')">&times;</span>`;
-    container.insertBefore(span, input);
+// ─── REMOVE TAG ───────────────────────────────────────────────────────────────
+function removeTag(itemId, tag) {
+  const item = items.find(i => i.id === itemId);
+  if (!item) return;
+  item.tags = (item.tags||[]).filter(t => t !== tag);
+  render();
+}
+
+// ─── DRAG & DROP ─────────────────────────────────────────────────────────────
+function initDragDrop() {
+  const grid = document.getElementById('card-grid');
+
+  grid.addEventListener('dragstart', (e) => {
+    const card = e.target.closest('[data-id]');
+    if (!card) return;
+    dragSrcId = card.dataset.id;
+    e.dataTransfer.effectAllowed = 'move';
+    setTimeout(() => card.classList.add('dragging'), 0);
+  });
+
+  grid.addEventListener('dragend', () => {
+    dragSrcId = null;
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('dragging', 'drag-over'));
+  });
+
+  grid.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    const card = e.target.closest('[data-id]');
+    if (!card || !dragSrcId || card.dataset.id === dragSrcId) return;
+    e.dataTransfer.dropEffect = 'move';
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('drag-over'));
+    card.classList.add('drag-over');
+  });
+
+  grid.addEventListener('dragleave', (e) => {
+    const card = e.target.closest('[data-id]');
+    if (card) card.classList.remove('drag-over');
+  });
+
+  grid.addEventListener('drop', (e) => {
+    e.preventDefault();
+    const card = e.target.closest('[data-id]');
+    if (!card || !dragSrcId || card.dataset.id === dragSrcId) return;
+    const targetId = card.dataset.id;
+
+    if (!customOrder) customOrder = items.map(i => i.id);
+
+    const si = customOrder.indexOf(dragSrcId);
+    if (si !== -1) customOrder.splice(si, 1);
+    const ti = customOrder.indexOf(targetId);
+    customOrder.splice(ti, 0, dragSrcId);
+
+    document.getElementById('sort-select').value = 'custom';
+    render();
   });
 }
 
-function removeEditTag(tag) {
-  editingTags = editingTags.filter(t => t !== tag);
-  renderEditTags();
+// ─── VIEW ────────────────────────────────────────────────────────────────────
+function setView(v) {
+  currentView = v;
+  const grid = document.getElementById('card-grid');
+  grid.classList.toggle('list-view', v === 'list');
+  document.getElementById('btn-card').classList.toggle('active', v === 'card');
+  document.getElementById('btn-list').classList.toggle('active', v === 'list');
+  render();
 }
 
-document.getElementById('tag-input').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && this.value.trim()) {
+// ─── MODAL ────────────────────────────────────────────────────────────────────
+function openModal(id) {
+  editingId = id || null;
+  modalTags = [];
+  const overlay = document.getElementById('modal-overlay');
+  const deleteBtn = document.getElementById('modal-delete-btn');
+
+  if (id) {
+    const item = items.find(i => i.id === id);
+    if (!item) return;
+    document.getElementById('modal-title').textContent = 'Edit Item';
+    document.getElementById('modal-url').value = item.url || '';
+    document.getElementById('modal-title-input').value = item.title || '';
+    document.getElementById('modal-note').value = item.note || '';
+    document.getElementById('modal-type').value = item.type || 'link';
+    document.getElementById('modal-date-post').value = item.dateOfPost || '';
+    modalTags = [...(item.tags||[])];
+    deleteBtn.style.display = 'block';
+  } else {
+    document.getElementById('modal-title').textContent = 'Add to Vault';
+    document.getElementById('modal-url').value = '';
+    document.getElementById('modal-title-input').value = '';
+    document.getElementById('modal-note').value = '';
+    document.getElementById('modal-type').value = 'link';
+    document.getElementById('modal-date-post').value = '';
+    deleteBtn.style.display = 'none';
+  }
+
+  renderModalTags();
+  overlay.classList.remove('hidden');
+  setTimeout(() => document.getElementById('modal-url').focus(), 50);
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.add('hidden');
+  editingId = null;
+  modalTags = [];
+}
+
+function renderModalTags() {
+  const wrap = document.getElementById('tags-input-wrap');
+  const input = document.getElementById('tags-inline-input');
+  // Remove all existing tag chips
+  wrap.querySelectorAll('.tags-input-tag').forEach(el => el.remove());
+  // Re-insert before input
+  modalTags.forEach(tag => {
+    const chip = document.createElement('span');
+    chip.className = 'tags-input-tag';
+    chip.innerHTML = `${escHtml(tag)}<button onclick="removeModalTag('${escHtml(tag)}')" type="button">×</button>`;
+    wrap.insertBefore(chip, input);
+  });
+}
+
+function removeModalTag(tag) {
+  modalTags = modalTags.filter(t => t !== tag);
+  renderModalTags();
+}
+
+document.getElementById('tags-inline-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ',') {
     e.preventDefault();
-    const tag = this.value.trim().toLowerCase().replace(/^#/, '');
-    if (!editingTags.includes(tag)) { editingTags.push(tag); renderEditTags(); }
-    this.value = '';
+    const val = e.target.value.trim().replace(/,$/, '').replace(/^#/, '');
+    if (val && !modalTags.includes(val)) {
+      modalTags.push(val);
+      renderModalTags();
+    }
+    e.target.value = '';
+  } else if (e.key === 'Backspace' && !e.target.value && modalTags.length) {
+    modalTags.pop();
+    renderModalTags();
   }
 });
 
-function saveEdit() {
-  const id = document.getElementById('edit-id').value;
-  const item = items.find(i => i.id === id);
-  if (!item) return;
+function saveItem() {
+  // Capture any pending tag input
+  const tagInput = document.getElementById('tags-inline-input');
+  const pendingTag = tagInput.value.trim().replace(/^#/, '');
+  if (pendingTag && !modalTags.includes(pendingTag)) modalTags.push(pendingTag);
+  tagInput.value = '';
 
-  item.title = document.getElementById('edit-title').value;
-  item.url = document.getElementById('edit-url').value;
-  item.notes = document.getElementById('edit-notes').value;
-  item.tags = [...editingTags];
+  const url = document.getElementById('modal-url').value.trim();
+  let title = document.getElementById('modal-title-input').value.trim();
+  if (!title && url) { try { title = new URL(url).hostname; } catch { title = url; } }
+  if (!title) { title = 'Untitled'; }
 
-  const selectedCat = document.querySelector('#edit-categories .category-option.selected');
-  if (selectedCat) item.category = selectedCat.textContent.toLowerCase().replace(/\s+/g, '-');
+  const note = document.getElementById('modal-note').value.trim();
+  const type = document.getElementById('modal-type').value;
+  const dateOfPost = document.getElementById('modal-date-post').value;
+
+  if (editingId) {
+    const item = items.find(i => i.id === editingId);
+    if (item) {
+      item.url = url;
+      item.title = title;
+      item.note = note;
+      item.type = type;
+      item.dateOfPost = dateOfPost;
+      item.tags = [...modalTags];
+    }
+  } else {
+    const today = new Date().toISOString().split('T')[0];
+    items.unshift({ id: generateId(), url, title, note, type, dateAdded: today, dateOfPost, tags: [...modalTags] });
+  }
 
   closeModal();
   render();
 }
 
 function deleteItem() {
-  const id = document.getElementById('edit-id').value;
-  items = items.filter(i => i.id !== id);
+  if (!editingId) return;
+  if (!confirm('Delete this item?')) return;
+  items = items.filter(i => i.id !== editingId);
+  if (customOrder) customOrder = customOrder.filter(id => id !== editingId);
   closeModal();
   render();
 }
 
-function closeModal() {
-  document.getElementById('edit-modal').classList.remove('show');
-}
+// Close modal on overlay click
+document.getElementById('modal-overlay').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+});
 
-// Add modal
-function openAddModal() {
-  document.getElementById('add-title').value = '';
-  document.getElementById('add-url').value = '';
-  document.getElementById('add-notes').value = '';
-  addingTags = [];
-  addCategory = 'article';
-  renderAddCategories();
-  renderAddTags();
-  document.getElementById('add-modal').classList.add('show');
-}
-
-function renderAddCategories() {
-  const container = document.getElementById('add-categories');
-  container.innerHTML = CATEGORIES.map(c =>
-    `<div class="category-option ${c.id === addCategory ? 'selected' : ''}" onclick="selectAddCategory(this, '${c.id}')">${c.label}</div>`
-  ).join('');
-}
-
-function selectAddCategory(el, catId) {
-  addCategory = catId;
-  el.parentElement.querySelectorAll('.category-option').forEach(e => e.classList.remove('selected'));
-  el.classList.add('selected');
-}
-
-function renderAddTags() {
-  const container = document.getElementById('add-tag-container');
-  const input = document.getElementById('add-tag-input');
-  container.querySelectorAll('.tag').forEach(t => t.remove());
-  addingTags.forEach(tag => {
-    const span = document.createElement('span');
-    span.className = `tag ${getTagClass(tag)}`;
-    span.innerHTML = `${tag} <span class="remove-tag" style="display:inline;cursor:pointer" onclick="removeAddTag('${tag}')">&times;</span>`;
-    container.insertBefore(span, input);
-  });
-}
-
-function removeAddTag(tag) {
-  addingTags = addingTags.filter(t => t !== tag);
-  renderAddTags();
-}
-
-document.getElementById('add-tag-input').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && this.value.trim()) {
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeModal();
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
     e.preventDefault();
-    const tag = this.value.trim().toLowerCase().replace(/^#/, '');
-    if (!addingTags.includes(tag)) { addingTags.push(tag); renderAddTags(); }
-    this.value = '';
+    document.getElementById('search-input').focus();
   }
 });
 
-function saveNewItem() {
-  const title = document.getElementById('add-title').value.trim();
-  if (!title) return;
-
-  items.unshift({
-    id: 'manual-' + Date.now(),
-    title,
-    url: document.getElementById('add-url').value.trim() || null,
-    notes: document.getElementById('add-notes').value.trim() || null,
-    category: addCategory,
-    tags: [...addingTags],
-    date: new Date().toISOString(),
-    starred: false,
-    source: 'manual'
-  });
-
-  closeAddModal();
-  render();
-}
-
-function closeAddModal() {
-  document.getElementById('add-modal').classList.remove('show');
-}
-
-// Close modals on overlay click
-document.getElementById('edit-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
-document.getElementById('add-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeAddModal(); });
-
-// View toggle
-document.querySelectorAll('.view-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentView = btn.dataset.view;
-    document.getElementById('main-container').className = currentView === 'list' ? 'main list' : 'main';
-    render();
-  });
-});
-
-// Search
-document.getElementById('search').addEventListener('input', render);
-document.getElementById('sort-select').addEventListener('change', render);
-
-// Keyboard shortcut
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeModal(); closeAddModal(); }
-  if (e.key === '/' && !e.target.closest('input, textarea')) { e.preventDefault(); document.getElementById('search').focus(); }
-});
-
-// Utility
-function escHtml(str) {
-  if (!str) return '';
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-// ============================================================
-// INIT
-// ============================================================
+// ─── INIT ────────────────────────────────────────────────────────────────────
 render();
 </script>
 </body>
