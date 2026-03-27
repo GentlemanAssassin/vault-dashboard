@@ -624,273 +624,295 @@
 // DATA STORE - This is where the scheduled task injects items
 // ============================================================
 const VAULT_DATA = {
-  items: [
-  {
-    "id": "email-19d2f9ff9007b54e",
-    "title": "Post by Google AI Studio on X",
-    "url": "https://x.com/googleaistudio/status/2037190639021154820?s=43",
-    "notes": null,
-    "category": "reference",
-    "tags": [],
-    "date": "2026-03-27T07:08:22-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d2c76d7b66c985",
-    "title": "Post by Matt Gottshall, CFP®, ECA on X",
-    "url": "https://x.com/matt_gottshall/status/2037161742690574473?s=43",
-    "notes": null,
-    "category": "reference",
-    "tags": [],
-    "date": "2026-03-26T16:24:34-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d2c72359afab7b",
-    "title": "Post by Mistral AI on X",
-    "url": "https://x.com/mistralai/status/2037183026539483288?s=43",
-    "notes": "How can we incorporate this into Mina?",
-    "category": "reference",
-    "tags": [],
-    "date": "2026-03-26T16:19:30-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d2b7ee147aa554",
-    "title": "Post by el.cine on X CapCut video editing ai",
-    "url": "https://x.com/ehuanglu/status/2036949499898454344?s=43",
-    "notes": null,
-    "category": "reference",
-    "tags": [],
-    "date": "2026-03-26T11:53:43-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d2b79e207fa571",
-    "title": "Pre-tax alpha AQR Direct Indexing Long Short",
-    "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6438799&utm_source=substack&utm_medium=email",
-    "notes": null,
-    "category": "research",
-    "tags": [],
-    "date": "2026-03-26T11:48:07-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d27202318504ec",
-    "title": "Post by Simon B. Støvring on X",
-    "url": "https://x.com/simonbs/status/2036798027990474790?s=43",
-    "notes": "Claude tool",
-    "category": "reference",
-    "tags": [],
-    "date": "2026-03-25T15:31:47-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d271f46ed1b2f4",
-    "title": "Link to save",
-    "url": "https://apnews.com",
-    "notes": "Trump administration offers 15-point ceasefire plan to Iran",
-    "category": "article",
-    "tags": [],
-    "date": "2026-03-25T15:30:44-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d2716fb2776e95",
-    "title": "Post by JJ Englert on X",
-    "url": "https://x.com/jjenglert/status/2036892413289996449?s=43",
-    "notes": null,
-    "category": "reference",
-    "tags": [],
-    "date": "2026-03-25T15:21:45-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d25ece8608bea5",
-    "title": "Post by Millie Marconi on X",
-    "url": "https://x.com/milliemarconnni/status/2036363493478375797?s=43",
-    "notes": null,
-    "category": "reference",
-    "tags": [],
-    "date": "2026-03-25T09:56:13-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d2596901d27d99",
-    "title": "Tax-aware share research",
-    "url": "https://www.linkedin.com/posts/new-research-explores-a-key-question-in-tax-aware-share-7440774221699387392-pwd5?utm_source=share&utm_medium=member_ios&rcm=ACoAAAPRhlUBmc4WoWV3uEKcVcCgKXPsRCGEKW8",
-    "notes": null,
-    "category": "reference",
-    "tags": [],
-    "date": "2026-03-25T08:21:52-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d23310a616bd5e",
-    "title": "Post by Renoise on X",
-    "url": "https://x.com/renoiseai/status/2036089896503529521?s=43",
-    "notes": null,
-    "category": "reference",
-    "tags": [],
-    "date": "2026-03-24T21:11:47-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d23306f83dfb7e",
-    "title": "Post by Spline on X",
-    "url": "https://x.com/splinetool/status/2036517448112021863?s=43",
-    "notes": null,
-    "category": "reference",
-    "tags": [],
-    "date": "2026-03-24T21:11:06-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d23105d7a7def9",
-    "title": "The Complete Guide to Building Your Free Local AI Assistant with Ollama and Open WebUI",
-    "url": "https://www.reddit.com/r/selfhosted/s/vumaDvfzVe",
-    "notes": null,
-    "category": "article",
-    "tags": [],
-    "date": "2026-03-24T20:36:04-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d1b74cd32a1ab2",
-    "title": "Post by Akshay on X",
-    "url": "https://x.com/akshay_pachaar/status/2035986229687451723?s=43",
-    "notes": null,
-    "category": "reference",
-    "tags": [],
-    "date": "2026-03-23T09:08:50-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d1b143a796099b",
-    "title": "Post by MichaelKitces on X",
-    "url": "https://x.com/michaelkitces/status/2035854079281217580?s=43",
-    "notes": null,
-    "category": "reference",
-    "tags": [],
-    "date": "2026-03-23T07:23:18-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d18828f0267023",
-    "title": "Post by Vishakha Singhal on X",
-    "url": "https://x.com/vishisinghal_/status/2035625802415698184?s=43",
-    "notes": null,
-    "category": "reference",
-    "tags": [],
-    "date": "2026-03-22T19:24:59-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d185937a9be856",
-    "title": "Post by Corey Ganim on X",
-    "url": "https://x.com/coreyganim/status/2035827178131116160?s=43",
-    "notes": null,
-    "category": "reference",
-    "tags": [],
-    "date": "2026-03-22T18:39:50-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d1857618b895a7",
-    "title": "Post by Carlos Villuendas on X",
-    "url": "https://x.com/carlosvillu/status/2035627562215334254?s=43",
-    "notes": null,
-    "category": "reference",
-    "tags": [],
-    "date": "2026-03-22T18:37:48-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d17d7ee97e4bd7",
-    "title": "Post by Hasan Toor on X",
-    "url": "https://x.com/hasantoxr/status/2035312729427480840?s=43",
-    "notes": null,
-    "category": "reference",
-    "tags": [],
-    "date": "2026-03-22T16:18:37-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d116bef9fc9d49",
-    "title": "Post by Ihtesham Ali on X",
-    "url": "https://x.com/ihtesham2005/status/2035325595048083663?s=43",
-    "notes": null,
-    "category": "reference",
-    "tags": [],
-    "date": "2026-03-21T10:22:53-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d1146f51f555eb",
-    "title": "Post by Akshay on X",
-    "url": "https://x.com/akshay_pachaar/status/2035341800739877091?s=43",
-    "notes": null,
-    "category": "reference",
-    "tags": [],
-    "date": "2026-03-21T09:42:30-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d1134f7dac01f2",
-    "title": "Hostinger",
-    "url": null,
-    "notes": null,
-    "category": "idea",
-    "tags": [],
-    "date": "2026-03-21T09:22:41-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d10ea1e147d506",
-    "title": "Ideogram",
-    "url": "https://ideogram.ai/t/explore",
-    "notes": null,
-    "category": "article",
-    "tags": [],
-    "date": "2026-03-21T08:01:06-07:00",
-    "starred": false,
-    "source": "email"
-  },
-  {
-    "id": "email-19d10e10a24d6d69",
-    "title": "Post by darkzodchi on X",
-    "url": "https://x.com/zodchiii/status/2034924354337714642?s=43",
-    "notes": null,
-    "category": "reference",
-    "tags": [],
-    "date": "2026-03-21T07:51:10-07:00",
-    "starred": false,
-    "source": "email"
-  }
-],
-  lastUpdated: "2026-03-27T14:39:06.886Z"
+  "items": [
+    {
+      "id": "email-19d30db9ba82c475",
+      "title": "Post by Ben Johnson, CFA on X",
+      "url": "https://x.com/mstarbenjohnson/status/2037571241872093625?s=43",
+      "notes": null,
+      "category": "reference",
+      "tags": [],
+      "date": "2026-03-27T12:53:08-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d30db5ce639a8a",
+      "title": "Post by Kieran Goodwin on X",
+      "url": "https://x.com/kieranwgoodwin/status/2037551988217426126?s=43",
+      "notes": null,
+      "category": "reference",
+      "tags": [],
+      "date": "2026-03-27T12:52:51-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d2f9ff9007b54e",
+      "title": "Post by Google AI Studio on X",
+      "url": "https://x.com/googleaistudio/status/2037190639021154820?s=43",
+      "notes": null,
+      "category": "reference",
+      "tags": [],
+      "date": "2026-03-27T07:08:22-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d2c76d7b66c985",
+      "title": "Post by Matt Gottshall, CFP®, ECA on X",
+      "url": "https://x.com/matt_gottshall/status/2037161742690574473?s=43",
+      "notes": null,
+      "category": "reference",
+      "tags": [],
+      "date": "2026-03-26T16:24:34-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d2c72359afab7b",
+      "title": "Post by Mistral AI on X",
+      "url": "https://x.com/mistralai/status/2037183026539483288?s=43",
+      "notes": "How can we incorporate this into Mina?",
+      "category": "reference",
+      "tags": [],
+      "date": "2026-03-26T16:19:30-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d2b7ee147aa554",
+      "title": "Post by el.cine on X CapCut video editing ai",
+      "url": "https://x.com/ehuanglu/status/2036949499898454344?s=43",
+      "notes": null,
+      "category": "reference",
+      "tags": [],
+      "date": "2026-03-26T11:53:43-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d2b79e207fa571",
+      "title": "Pre-tax alpha AQR Direct Indexing Long Short",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6438799",
+      "notes": null,
+      "category": "research",
+      "tags": [],
+      "date": "2026-03-26T11:48:07-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d27202318504ec",
+      "title": "Post by Simon B. Støvring on X",
+      "url": "https://x.com/simonbs/status/2036798027990474790?s=43",
+      "notes": "Claude tool",
+      "category": "reference",
+      "tags": [],
+      "date": "2026-03-25T15:31:47-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d271f46ed1b2f4",
+      "title": "Link to save",
+      "url": "https://apnews.com",
+      "notes": "Trump administration offers 15-point ceasefire plan to Iran",
+      "category": "article",
+      "tags": [],
+      "date": "2026-03-25T15:30:44-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d2716fb2776e95",
+      "title": "Post by JJ Englert on X",
+      "url": "https://x.com/jjenglert/status/2036892413289996449?s=43",
+      "notes": null,
+      "category": "reference",
+      "tags": [],
+      "date": "2026-03-25T15:21:45-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d25ece8608bea5",
+      "title": "Post by Millie Marconi on X",
+      "url": "https://x.com/milliemarconnni/status/2036363493478375797?s=43",
+      "notes": null,
+      "category": "reference",
+      "tags": [],
+      "date": "2026-03-25T09:56:13-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d2596901d27d99",
+      "title": "Tax-aware share research",
+      "url": "https://www.linkedin.com/posts/new-research-explores-a-key-question-in-tax-aware-share-7440774221699387392-pwd5",
+      "notes": null,
+      "category": "reference",
+      "tags": [],
+      "date": "2026-03-25T08:21:52-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d23310a616bd5e",
+      "title": "Post by Renoise on X",
+      "url": "https://x.com/renoiseai/status/2036089896503529521?s=43",
+      "notes": null,
+      "category": "reference",
+      "tags": [],
+      "date": "2026-03-24T21:11:47-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d23306f83dfb7e",
+      "title": "Post by Spline on X",
+      "url": "https://x.com/splinetool/status/2036517448112021863?s=43",
+      "notes": null,
+      "category": "reference",
+      "tags": [],
+      "date": "2026-03-24T21:11:06-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d23105d7a7def9",
+      "title": "The Complete Guide to Building Your Free Local AI Assistant with Ollama and Open WebUI",
+      "url": "https://www.reddit.com/r/selfhosted/s/vumaDvfzVe",
+      "notes": null,
+      "category": "article",
+      "tags": [],
+      "date": "2026-03-24T20:36:04-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d1b74cd32a1ab2",
+      "title": "Post by Akshay on X",
+      "url": "https://x.com/akshay_pachaar/status/2035986229687451723?s=43",
+      "notes": null,
+      "category": "reference",
+      "tags": [],
+      "date": "2026-03-23T09:08:50-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d1b143a796099b",
+      "title": "Post by MichaelKitces on X",
+      "url": "https://x.com/michaelkitces/status/2035854079281217580?s=43",
+      "notes": null,
+      "category": "reference",
+      "tags": [],
+      "date": "2026-03-23T07:23:18-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d18828f0267023",
+      "title": "Post by Vishakha Singhal on X",
+      "url": "https://x.com/vishisinghal_/status/2035625802415698184?s=43",
+      "notes": null,
+      "category": "reference",
+      "tags": [],
+      "date": "2026-03-22T19:24:59-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d185937a9be856",
+      "title": "Post by Corey Ganim on X",
+      "url": "https://x.com/coreyganim/status/2035827178131116160?s=43",
+      "notes": null,
+      "category": "reference",
+      "tags": [],
+      "date": "2026-03-22T18:39:50-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d1857618b895a7",
+      "title": "Post by Carlos Villuendas on X",
+      "url": "https://x.com/carlosvillu/status/2035627562215334254?s=43",
+      "notes": null,
+      "category": "reference",
+      "tags": [],
+      "date": "2026-03-22T18:37:48-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d17d7ee97e4bd7",
+      "title": "Post by Hasan Toor on X",
+      "url": "https://x.com/hasantoxr/status/2035312729427480840?s=43",
+      "notes": null,
+      "category": "reference",
+      "tags": [],
+      "date": "2026-03-22T16:18:37-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d116bef9fc9d49",
+      "title": "Post by Ihtesham Ali on X",
+      "url": "https://x.com/ihtesham2005/status/2035325595048083663?s=43",
+      "notes": null,
+      "category": "reference",
+      "tags": [],
+      "date": "2026-03-21T10:22:53-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d1146f51f555eb",
+      "title": "Post by Akshay on X",
+      "url": "https://x.com/akshay_pachaar/status/2035341800739877091?s=43",
+      "notes": null,
+      "category": "reference",
+      "tags": [],
+      "date": "2026-03-21T09:42:30-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d1134f7dac01f2",
+      "title": "Hostinger",
+      "url": null,
+      "notes": null,
+      "category": "idea",
+      "tags": [],
+      "date": "2026-03-21T09:22:41-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d10ea1e147d506",
+      "title": "Ideogram",
+      "url": "https://ideogram.ai/t/explore",
+      "notes": null,
+      "category": "article",
+      "tags": [],
+      "date": "2026-03-21T08:01:06-07:00",
+      "starred": false,
+      "source": "email"
+    },
+    {
+      "id": "email-19d10e10a24d6d69",
+      "title": "Post by darkzodchi on X",
+      "url": "https://x.com/zodchiii/status/2034924354337714642?s=43",
+      "notes": null,
+      "category": "reference",
+      "tags": [],
+      "date": "2026-03-21T07:51:10-07:00",
+      "starred": false,
+      "source": "email"
+    }
+  ],
+  "lastUpdated": "2026-03-27T20:08:36.285Z"
 };
 
 // ============================================================
