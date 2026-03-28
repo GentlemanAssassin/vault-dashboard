@@ -32,7 +32,7 @@
   .search-wrap { position: relative; }
   .search-wrap input { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 13px; padding: 7px 12px 7px 32px; width: 200px; outline: none; transition: border-color var(--transition); }
   .search-wrap input:focus { border-color: var(--accent); }
-  .search-wrap::before { content: 'â'; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 15px; pointer-events: none; }
+  .search-wrap::before { content: 'Ã¢ÂÂ'; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 15px; pointer-events: none; }
   select { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 13px; padding: 7px 10px; outline: none; cursor: pointer; }
   select:focus { border-color: var(--accent); }
   .view-toggle { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
@@ -137,10 +137,10 @@
 <body>
 
 <header>
-  <div class="logo">â¬¡ <span>Vault</span></div>
+  <div class="logo">Ã¢Â¬Â¡ <span>Vault</span></div>
   <div class="header-controls">
     <div class="search-wrap">
-      <input type="text" id="search-input" placeholder="Searchâ¦" oninput="render()">
+      <input type="text" id="search-input" placeholder="SearchÃ¢ÂÂ¦" oninput="render()">
     </div>
     <select id="tag-filter-select" onchange="render()">
       <option value="">All tags</option>
@@ -148,14 +148,14 @@
     <select id="sort-select" onchange="render()">
       <option value="dateAdded-desc">Newest added</option>
       <option value="dateAdded-asc">Oldest added</option>
-      <option value="dateOfPost-desc">Post date â</option>
-      <option value="dateOfPost-asc">Post date â</option>
-      <option value="title-asc">Title AâZ</option>
+      <option value="dateOfPost-desc">Post date Ã¢ÂÂ</option>
+      <option value="dateOfPost-asc">Post date Ã¢ÂÂ</option>
+      <option value="title-asc">Title AÃ¢ÂÂZ</option>
       <option value="custom">Custom order</option>
     </select>
     <div class="view-toggle">
-      <button class="view-btn active" id="btn-card" onclick="setView('card')" title="Card view">â</button>
-      <button class="view-btn" id="btn-list" onclick="setView('list')" title="List view">â°</button>
+      <button class="view-btn active" id="btn-card" onclick="setView('card')" title="Card view">Ã¢ÂÂ</button>
+      <button class="view-btn" id="btn-list" onclick="setView('list')" title="List view">Ã¢ÂÂ°</button>
     </div>
     <span class="count-badge" id="count-badge"></span>
     <button class="add-btn" onclick="openModal()">+ Add</button>
@@ -173,7 +173,7 @@
     <h2 id="modal-title">Add to Vault</h2>
     <div class="form-group">
       <label>URL</label>
-      <input type="url" id="modal-url" placeholder="https://â¦">
+      <input type="url" id="modal-url" placeholder="https://Ã¢ÂÂ¦">
     </div>
     <div class="form-group">
       <label>Title</label>
@@ -181,7 +181,7 @@
     </div>
     <div class="form-group">
       <label>Note</label>
-      <textarea id="modal-note" placeholder="Optional noteâ¦"></textarea>
+      <textarea id="modal-note" placeholder="Optional noteÃ¢ÂÂ¦"></textarea>
     </div>
     <div class="form-group">
       <label>Type</label>
@@ -198,7 +198,7 @@
     <div class="form-group">
       <label>Tags</label>
       <div class="tags-input-wrap" id="tags-input-wrap" onclick="document.getElementById('tags-inline-input').focus()">
-        <input class="tags-inline-input" id="tags-inline-input" placeholder="Type tag, press Enterâ¦" maxlength="40">
+        <input class="tags-inline-input" id="tags-inline-input" placeholder="Type tag, press EnterÃ¢ÂÂ¦" maxlength="40">
       </div>
     </div>
     <div class="modal-actions">
@@ -210,395 +210,310 @@
 </div>
 
 <script>
-// âââ DATA ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ DATA Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 let items = [
   {
-    "id": "1",
-    "title": "Matt Gottshall CFP",
-    "url": "https://x.com/MGottshallCFP",
-    "type": "link",
-    "note": "",
-    "dateAdded": "2025-03-01",
-    "dateOfPost": "",
+    "id": "email-19d355508f492ecd",
+    "title": "The Fun They Had - Sci-fi Short Stories",
+    "url": "https://blogs.atu.edu/morelan/files/2020/06/TheFunTheyHad.pdf",
+    "notes": "Sci-fi short stories to read",
+    "category": "read-later",
     "tags": [
-      "Financial Planning",
-      "CFP",
-      "Wealth Management"
-    ]
+      "sci-fi"
+    ],
+    "date": "2026-03-28T09:44:14-07:00",
+    "starred": false,
+    "source": "email"
   },
   {
-    "id": "2",
-    "title": "Mistral AI",
-    "url": "https://x.com/MistralAI",
-    "type": "link",
-    "note": "How can we incorporate this into Mina?",
-    "dateAdded": "2025-03-02",
-    "dateOfPost": "",
-    "tags": [
-      "AI",
-      "LLM",
-      "Mistral",
-      "Product Development"
-    ]
+    "id": "email-19d30db9ba82c475",
+    "title": "Post by Ben Johnson, CFA on X",
+    "url": "https://x.com/mstarbenjohnson/status/2037571241872093625?s=43",
+    "notes": null,
+    "category": "reference",
+    "tags": [],
+    "date": "2026-03-27T12:53:08-07:00",
+    "starred": false,
+    "source": "email"
   },
   {
-    "id": "3",
-    "title": "el.cine \u2013 CapCut AI video editing",
-    "url": "https://x.com/elcine_app",
-    "type": "link",
-    "note": "",
-    "dateAdded": "2025-03-03",
-    "dateOfPost": "",
-    "tags": [
-      "AI Tools",
-      "Video Editing",
-      "Content Creation"
-    ]
+    "id": "email-19d30db5ce639a8a",
+    "title": "Post by Kieran Goodwin on X",
+    "url": "https://x.com/kieranwgoodwin/status/2037551988217426126?s=43",
+    "notes": null,
+    "category": "reference",
+    "tags": [],
+    "date": "2026-03-27T12:52:51-07:00",
+    "starred": false,
+    "source": "email"
   },
   {
-    "id": "4",
-    "title": "AQR Direct Indexing & Factor Investing (SSRN)",
-    "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3464015",
-    "type": "link",
-    "note": "",
-    "dateAdded": "2025-03-04",
-    "dateOfPost": "",
-    "tags": [
-      "Investments",
-      "Alternative Investments",
-      "AQR",
-      "Direct Indexing",
-      "Tax Strategy",
-      "Factor Investing"
-    ]
+    "id": "email-19d2f9ff9007b54e",
+    "title": "Post by Google AI Studio on X",
+    "url": "https://x.com/googleaistudio/status/2037190639021154820?s=43",
+    "notes": null,
+    "category": "reference",
+    "tags": [],
+    "date": "2026-03-27T07:08:22-07:00",
+    "starred": false,
+    "source": "email"
   },
   {
-    "id": "5",
-    "title": "Simon St\u00f8vring",
-    "url": "https://x.com/simonbs",
-    "type": "link",
-    "note": "Claude tool",
-    "dateAdded": "2025-03-05",
-    "dateOfPost": "",
-    "tags": [
-      "AI",
-      "Claude",
-      "Developer Tools",
-      "Automation"
-    ]
+    "id": "email-19d2c76d7b66c985",
+    "title": "Post by Matt Gottshall, CFP®, ECA on X",
+    "url": "https://x.com/matt_gottshall/status/2037161742690574473?s=43",
+    "notes": null,
+    "category": "reference",
+    "tags": [],
+    "date": "2026-03-26T16:24:34-07:00",
+    "starred": false,
+    "source": "email"
   },
   {
-    "id": "6",
-    "title": "AP News \u2013 Iran Ceasefire",
+    "id": "email-19d2c72359afab7b",
+    "title": "Post by Mistral AI on X",
+    "url": "https://x.com/mistralai/status/2037183026539483288?s=43",
+    "notes": "How can we incorporate this into Mina?",
+    "category": "reference",
+    "tags": [],
+    "date": "2026-03-26T16:19:30-07:00",
+    "starred": false,
+    "source": "email"
+  },
+  {
+    "id": "email-19d2b7ee147aa554",
+    "title": "Post by el.cine on X CapCut video editing ai",
+    "url": "https://x.com/ehuanglu/status/2036949499898454344?s=43",
+    "notes": null,
+    "category": "reference",
+    "tags": [],
+    "date": "2026-03-26T11:53:43-07:00",
+    "starred": false,
+    "source": "email"
+  },
+  {
+    "id": "email-19d2b79e207fa571",
+    "title": "Pre-tax alpha AQR Direct Indexing Long Short",
+    "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6438799&utm_source=substack&utm_medium=email",
+    "notes": null,
+    "category": "research",
+    "tags": [],
+    "date": "2026-03-26T11:48:07-07:00",
+    "starred": false,
+    "source": "email"
+  },
+  {
+    "id": "email-19d27202318504ec",
+    "title": "Post by Simon B. Støvring on X",
+    "url": "https://x.com/simonbs/status/2036798027990474790?s=43",
+    "notes": "Claude tool",
+    "category": "reference",
+    "tags": [],
+    "date": "2026-03-25T15:31:47-07:00",
+    "starred": false,
+    "source": "email"
+  },
+  {
+    "id": "email-19d271f46ed1b2f4",
+    "title": "Link to save",
     "url": "https://apnews.com",
-    "type": "link",
-    "note": "Trump administration offers 15-point ceasefire plan to Iran",
-    "dateAdded": "2025-03-06",
-    "dateOfPost": "",
-    "tags": [
-      "Geopolitics",
-      "Middle East",
-      "Iran",
-      "Foreign Policy"
-    ]
+    "notes": "Trump administration offers 15-point ceasefire plan to Iran",
+    "category": "article",
+    "tags": [],
+    "date": "2026-03-25T15:30:44-07:00",
+    "starred": false,
+    "source": "email"
   },
   {
-    "id": "7",
-    "title": "JJ Englert \u2013 AI & No-Code",
-    "url": "https://x.com/jjenglert",
-    "type": "link",
-    "note": "",
-    "dateAdded": "2025-03-07",
-    "dateOfPost": "",
-    "tags": [
-      "AI",
-      "No-Code",
-      "Entrepreneurship"
-    ]
+    "id": "email-19d2716fb2776e95",
+    "title": "Post by JJ Englert on X",
+    "url": "https://x.com/jjenglert/status/2036892413289996449?s=43",
+    "notes": null,
+    "category": "reference",
+    "tags": [],
+    "date": "2026-03-25T15:21:45-07:00",
+    "starred": false,
+    "source": "email"
   },
   {
-    "id": "8",
-    "title": "Millie Marconi \u2013 Yesterday / TestFeed",
-    "url": "https://x.com/milliemarconi",
-    "type": "link",
-    "note": "",
-    "dateAdded": "2025-03-08",
-    "dateOfPost": "",
-    "tags": [
-      "AI",
-      "Content Creation",
-      "Startups"
-    ]
+    "id": "email-19d25ece8608bea5",
+    "title": "Post by Millie Marconi on X",
+    "url": "https://x.com/milliemarconnni/status/2036363493478375797?s=43",
+    "notes": null,
+    "category": "reference",
+    "tags": [],
+    "date": "2026-03-25T09:56:13-07:00",
+    "starred": false,
+    "source": "email"
   },
   {
-    "id": "9",
-    "title": "Tax-Aware Share Research",
-    "url": "https://www.linkedin.com",
-    "type": "link",
-    "note": "Tax-aware share research LinkedIn",
-    "dateAdded": "2025-03-09",
-    "dateOfPost": "",
-    "tags": [
-      "Investments",
-      "Tax Strategy",
-      "Research",
-      "Portfolio Management"
-    ]
+    "id": "email-19d2596901d27d99",
+    "title": "Tax-aware share research",
+    "url": "https://www.linkedin.com/posts/new-research-explores-a-key-question-in-tax-aware-share-7440774221699387392-pwd5?utm_source=share&utm_medium=member_ios&rcm=ACoAAAPRhlUBmc4WoWV3uEKcVcCgKXPsRCGEKW8",
+    "notes": null,
+    "category": "reference",
+    "tags": [],
+    "date": "2026-03-25T08:21:52-07:00",
+    "starred": false,
+    "source": "email"
   },
   {
-    "id": "10",
-    "title": "Renoise",
-    "url": "https://www.renoise.com",
-    "type": "link",
-    "note": "",
-    "dateAdded": "2025-03-10",
-    "dateOfPost": "",
-    "tags": [
-      "Music Production",
-      "AI",
-      "Creative Tools"
-    ]
+    "id": "email-19d23310a616bd5e",
+    "title": "Post by Renoise on X",
+    "url": "https://x.com/renoiseai/status/2036089896503529521?s=43",
+    "notes": null,
+    "category": "reference",
+    "tags": [],
+    "date": "2026-03-24T21:11:47-07:00",
+    "starred": false,
+    "source": "email"
   },
   {
-    "id": "11",
-    "title": "Spline \u2013 3D Design",
-    "url": "https://spline.design",
-    "type": "link",
-    "note": "",
-    "dateAdded": "2025-03-11",
-    "dateOfPost": "",
-    "tags": [
-      "3D Design",
-      "Design Tools",
-      "Creative Tools"
-    ]
+    "id": "email-19d23306f83dfb7e",
+    "title": "Post by Spline on X",
+    "url": "https://x.com/splinetool/status/2036517448112021863?s=43",
+    "notes": null,
+    "category": "reference",
+    "tags": [],
+    "date": "2026-03-24T21:11:06-07:00",
+    "starred": false,
+    "source": "email"
   },
   {
-    "id": "12",
-    "title": "Reddit \u2013 Ollama Local AI Guide",
-    "url": "https://reddit.com",
-    "type": "link",
-    "note": "",
-    "dateAdded": "2025-03-12",
-    "dateOfPost": "",
-    "tags": [
-      "AI",
-      "Self-Hosted",
-      "Local AI",
-      "Ollama"
-    ]
+    "id": "email-19d23105d7a7def9",
+    "title": "The Complete Guide to Building Your Free Local AI Assistant with Ollama and Open WebUI",
+    "url": "https://www.reddit.com/r/selfhosted/s/vumaDvfzVe",
+    "notes": null,
+    "category": "article",
+    "tags": [],
+    "date": "2026-03-24T20:36:04-07:00",
+    "starred": false,
+    "source": "email"
   },
   {
-    "id": "13",
-    "title": "Akshay \u2013 ML & Python Tips",
-    "url": "https://x.com/akshay_pachaar",
-    "type": "link",
-    "note": "Mar 23",
-    "dateAdded": "2025-03-23",
-    "dateOfPost": "2025-03-23",
-    "tags": [
-      "AI",
-      "Machine Learning",
-      "Python",
-      "Data Science"
-    ]
+    "id": "email-19d1b74cd32a1ab2",
+    "title": "Post by Akshay on X",
+    "url": "https://x.com/akshay_pachaar/status/2035986229687451723?s=43",
+    "notes": null,
+    "category": "reference",
+    "tags": [],
+    "date": "2026-03-23T09:08:50-07:00",
+    "starred": false,
+    "source": "email"
   },
   {
-    "id": "14",
-    "title": "Michael Kitces \u2013 Financial Planning",
-    "url": "https://x.com/MichaelKitces",
-    "type": "link",
-    "note": "",
-    "dateAdded": "2025-03-14",
-    "dateOfPost": "",
-    "tags": [
-      "Financial Planning",
-      "Wealth Management",
-      "Advisor Tech"
-    ]
+    "id": "email-19d1b143a796099b",
+    "title": "Post by MichaelKitces on X",
+    "url": "https://x.com/michaelkitces/status/2035854079281217580?s=43",
+    "notes": null,
+    "category": "reference",
+    "tags": [],
+    "date": "2026-03-23T07:23:18-07:00",
+    "starred": false,
+    "source": "email"
   },
   {
-    "id": "15",
-    "title": "Vishakha Singhal \u2013 AI Productivity",
-    "url": "https://x.com/vishakha_s_",
-    "type": "link",
-    "note": "",
-    "dateAdded": "2025-03-15",
-    "dateOfPost": "",
-    "tags": [
-      "AI",
-      "ChatGPT",
-      "Productivity"
-    ]
+    "id": "email-19d18828f0267023",
+    "title": "Post by Vishakha Singhal on X",
+    "url": "https://x.com/vishisinghal_/status/2035625802415698184?s=43",
+    "notes": null,
+    "category": "reference",
+    "tags": [],
+    "date": "2026-03-22T19:24:59-07:00",
+    "starred": false,
+    "source": "email"
   },
   {
-    "id": "16",
-    "title": "Corey Ganim \u2013 Amazon & AI Automation",
-    "url": "https://x.com/CoreyGanim",
-    "type": "link",
-    "note": "",
-    "dateAdded": "2025-03-16",
-    "dateOfPost": "",
-    "tags": [
-      "E-Commerce",
-      "Amazon",
-      "AI",
-      "Business Automation"
-    ]
+    "id": "email-19d185937a9be856",
+    "title": "Post by Corey Ganim on X",
+    "url": "https://x.com/coreyganim/status/2035827178131116160?s=43",
+    "notes": null,
+    "category": "reference",
+    "tags": [],
+    "date": "2026-03-22T18:39:50-07:00",
+    "starred": false,
+    "source": "email"
   },
   {
-    "id": "17",
-    "title": "Carlos Villuendas \u2013 Frontend Engineering",
-    "url": "https://x.com/carlosv_dev",
-    "type": "link",
-    "note": "",
-    "dateAdded": "2025-03-17",
-    "dateOfPost": "",
-    "tags": [
-      "Web Development",
-      "JavaScript",
-      "React"
-    ]
+    "id": "email-19d1857618b895a7",
+    "title": "Post by Carlos Villuendas on X",
+    "url": "https://x.com/carlosvillu/status/2035627562215334254?s=43",
+    "notes": null,
+    "category": "reference",
+    "tags": [],
+    "date": "2026-03-22T18:37:48-07:00",
+    "starred": false,
+    "source": "email"
   },
   {
-    "id": "18",
-    "title": "Hasan Toor \u2013 AI Education",
-    "url": "https://x.com/hasantoxr",
-    "type": "link",
-    "note": "",
-    "dateAdded": "2025-03-18",
-    "dateOfPost": "",
-    "tags": [
-      "AI",
-      "Tech Education",
-      "AI Tools"
-    ]
+    "id": "email-19d17d7ee97e4bd7",
+    "title": "Post by Hasan Toor on X",
+    "url": "https://x.com/hasantoxr/status/2035312729427480840?s=43",
+    "notes": null,
+    "category": "reference",
+    "tags": [],
+    "date": "2026-03-22T16:18:37-07:00",
+    "starred": false,
+    "source": "email"
   },
   {
-    "id": "19",
-    "title": "Ihtesham Ali \u2013 Open-Source AI",
-    "url": "https://x.com/ihtesham_ai",
-    "type": "link",
-    "note": "",
-    "dateAdded": "2025-03-19",
-    "dateOfPost": "",
-    "tags": [
-      "AI",
-      "Open Source",
-      "Developer Tools",
-      "AI Agents"
-    ]
+    "id": "email-19d116bef9fc9d49",
+    "title": "Post by Ihtesham Ali on X",
+    "url": "https://x.com/ihtesham2005/status/2035325595048083663?s=43",
+    "notes": null,
+    "category": "reference",
+    "tags": [],
+    "date": "2026-03-21T10:22:53-07:00",
+    "starred": false,
+    "source": "email"
   },
   {
-    "id": "20",
-    "title": "Akshay \u2013 AI Agents & Skill Graphs",
-    "url": "https://x.com/akshay_pachaar",
-    "type": "link",
-    "note": "Mar 21",
-    "dateAdded": "2025-03-21",
-    "dateOfPost": "2025-03-21",
-    "tags": [
-      "AI",
-      "AI Agents",
-      "Developer Tools",
-      "LLM"
-    ]
+    "id": "email-19d1146f51f555eb",
+    "title": "Post by Akshay on X",
+    "url": "https://x.com/akshay_pachaar/status/2035341800739877091?s=43",
+    "notes": null,
+    "category": "reference",
+    "tags": [],
+    "date": "2026-03-21T09:42:30-07:00",
+    "starred": false,
+    "source": "email"
   },
   {
-    "id": "21",
-    "title": "Hostinger \u2013 Web Hosting Idea",
-    "url": "",
-    "type": "idea",
-    "note": "Hostinger",
-    "dateAdded": "2025-03-20",
-    "dateOfPost": "",
-    "tags": [
-      "Web Hosting",
-      "Business",
-      "Idea"
-    ]
+    "id": "email-19d1134f7dac01f2",
+    "title": "Hostinger",
+    "url": null,
+    "notes": null,
+    "category": "idea",
+    "tags": [],
+    "date": "2026-03-21T09:22:41-07:00",
+    "starred": false,
+    "source": "email"
   },
   {
-    "id": "22",
-    "title": "Ideogram \u2013 AI Image Generation",
-    "url": "https://ideogram.ai",
-    "type": "link",
-    "note": "",
-    "dateAdded": "2025-03-22",
-    "dateOfPost": "",
-    "tags": [
-      "AI",
-      "Image Generation",
-      "Design",
-      "Creative Tools"
-    ]
+    "id": "email-19d10ea1e147d506",
+    "title": "Ideogram",
+    "url": "https://ideogram.ai/t/explore",
+    "notes": null,
+    "category": "article",
+    "tags": [],
+    "date": "2026-03-21T08:01:06-07:00",
+    "starred": false,
+    "source": "email"
   },
   {
-    "id": "23",
-    "title": "darKzodchi \u2013 AI Design",
-    "url": "https://x.com/darKzodchi",
-    "type": "link",
-    "note": "",
-    "dateAdded": "2025-03-24",
-    "dateOfPost": "",
-    "tags": [
-      "AI",
-      "Design",
-      "Creative Tools"
-    ]
-  }
-,
-  {
-    "id": "24",
-    "title": "Ben Johnson, CFA",
-    "url": "https://x.com/mstarbenjohnson/status/2037571241872093625",
-    "type": "link",
-    "note": "",
-    "dateAdded": "2026-03-27",
-    "dateOfPost": "2026-03-27",
-    "tags": [
-      "Investments",
-      "ETFs",
-      "Index Investing",
-      "Passive Management",
-      "Investment Research"
-    ]
-  },
-  {
-    "id": "25",
-    "title": "Kieran Goodwin",
-    "url": "https://x.com/kieranwgoodwin/status/2037551988217426126",
-    "type": "link",
-    "note": "",
-    "dateAdded": "2026-03-27",
-    "dateOfPost": "2026-03-27",
-    "tags": [
-      "Investments",
-      "Credit Markets",
-      "Private Credit",
-      "Quantitative Finance",
-      "Banking"
-    ]
-  },
-  {
-    "id": "26",
-    "title": "Google AI Studio",
-    "url": "https://x.com/googleaistudio/status/2037190639021154820",
-    "type": "link",
-    "note": "",
-    "dateAdded": "2026-03-27",
-    "dateOfPost": "2026-03-27",
-    "tags": [
-      "AI",
-      "Generative AI",
-      "Gemini",
-      "AI Development",
-      "Google"
-    ]
+    "id": "email-19d10e10a24d6d69",
+    "title": "Post by darkzodchi on X",
+    "url": "https://x.com/zodchiii/status/2034924354337714642?s=43",
+    "notes": null,
+    "category": "reference",
+    "tags": [],
+    "date": "2026-03-21T07:51:10-07:00",
+    "starred": false,
+    "source": "email"
   }
 ];
 
-// âââ STATE âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ STATE Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 let currentView = 'card';
 let customOrder = null;
 let dragSrcId = null;
@@ -606,7 +521,7 @@ let editingId = null;
 let activeTagFilter = '';
 let modalTags = [];
 
-// âââ UTILS âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ UTILS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function getDomain(url) {
   try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return ''; }
 }
@@ -633,7 +548,7 @@ function generateId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 }
 
-// âââ FILTER / SORT âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ FILTER / SORT Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function getFiltered() {
   const q = document.getElementById('search-input').value.trim().toLowerCase();
   const sort = document.getElementById('sort-select').value;
@@ -669,7 +584,7 @@ function getFiltered() {
   return filtered;
 }
 
-// âââ TAG FILTER BAR ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ TAG FILTER BAR Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function buildTagFilterBar() {
   const allTags = {};
   items.forEach(item => (item.tags||[]).forEach(t => { allTags[t] = (allTags[t]||0) + 1; }));
@@ -680,7 +595,7 @@ function buildTagFilterBar() {
 
   let html = '<span class="tfl">Filter:</span>';
   if (activeTagFilter) {
-    html += `<button class="filter-tag clear-all" onclick="clearTagFilter()">â Clear</button>`;
+    html += `<button class="filter-tag clear-all" onclick="clearTagFilter()">Ã¢ÂÂ Clear</button>`;
   }
   sorted.forEach(tag => {
     const active = activeTagFilter === tag ? ' active' : '';
@@ -714,9 +629,9 @@ function clearTagFilter() {
   render();
 }
 
-// âââ RENDER âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ RENDER Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function render() {
-  // sync tag filter select â activeTagFilter
+  // sync tag filter select Ã¢ÂÂ activeTagFilter
   const selVal = document.getElementById('tag-filter-select').value;
   if (selVal !== activeTagFilter && selVal !== undefined) {
     activeTagFilter = selVal;
@@ -747,7 +662,7 @@ function renderCard(item) {
   const noteEl = item.note ? `<div class="card-note">${escHtml(item.note)}</div>` : '';
 
   const tagsHtml = (item.tags||[]).map(tag =>
-    `<span class="tag">${escHtml(tag)}<button class="tag-remove" onclick="removeTag('${escHtml(item.id)}','${escHtml(tag)}')" title="Remove tag">Ã</button></span>`
+    `<span class="tag">${escHtml(tag)}<button class="tag-remove" onclick="removeTag('${escHtml(item.id)}','${escHtml(tag)}')" title="Remove tag">ÃÂ</button></span>`
   ).join('');
 
   const dateDisplay = item.dateOfPost
@@ -757,14 +672,14 @@ function renderCard(item) {
   return `
 <div class="card" data-id="${escHtml(item.id)}" draggable="true">
   <div class="card-header">
-    <span class="drag-handle" title="Drag to reorder">â ¿</span>
+    <span class="drag-handle" title="Drag to reorder">Ã¢Â Â¿</span>
     ${favicon}
     <div class="card-title-wrap">
       <div class="card-title">${titleContent}</div>
       ${domainEl}
     </div>
     <div class="card-actions">
-      <button class="icon-btn" onclick="openModal('${escHtml(item.id)}')" title="Edit">â</button>
+      <button class="icon-btn" onclick="openModal('${escHtml(item.id)}')" title="Edit">Ã¢ÂÂ</button>
     </div>
   </div>
   ${noteEl}
@@ -779,7 +694,7 @@ function renderCard(item) {
 </div>`;
 }
 
-// âââ QUICK TAG ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ QUICK TAG Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function openQuickTag(itemId) {
   const card = document.querySelector(`[data-id="${itemId}"]`);
   if (!card) return;
@@ -789,7 +704,7 @@ function openQuickTag(itemId) {
 
   const wrap = document.createElement('div');
   wrap.className = 'quick-tag-input-wrap';
-  wrap.innerHTML = `<input class="quick-tag-input" type="text" placeholder="tag nameâ¦" maxlength="40">`;
+  wrap.innerHTML = `<input class="quick-tag-input" type="text" placeholder="tag nameÃ¢ÂÂ¦" maxlength="40">`;
 
   // Insert before the add button
   const addBtn = tagsEl.querySelector('.tag-add-btn');
@@ -820,7 +735,7 @@ function openQuickTag(itemId) {
   }, 200));
 }
 
-// âââ REMOVE TAG âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ REMOVE TAG Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function removeTag(itemId, tag) {
   const item = items.find(i => i.id === itemId);
   if (!item) return;
@@ -828,7 +743,7 @@ function removeTag(itemId, tag) {
   render();
 }
 
-// âââ DRAG & DROP âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ DRAG & DROP Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function initDragDrop() {
   const grid = document.getElementById('card-grid');
 
@@ -877,7 +792,7 @@ function initDragDrop() {
   });
 }
 
-// âââ VIEW ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ VIEW Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function setView(v) {
   currentView = v;
   const grid = document.getElementById('card-grid');
@@ -887,7 +802,7 @@ function setView(v) {
   render();
 }
 
-// âââ MODAL ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ MODAL Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function openModal(id) {
   editingId = id || null;
   modalTags = [];
@@ -935,7 +850,7 @@ function renderModalTags() {
   modalTags.forEach(tag => {
     const chip = document.createElement('span');
     chip.className = 'tags-input-tag';
-    chip.innerHTML = `${escHtml(tag)}<button onclick="removeModalTag('${escHtml(tag)}')" type="button">Ã</button>`;
+    chip.innerHTML = `${escHtml(tag)}<button onclick="removeModalTag('${escHtml(tag)}')" type="button">ÃÂ</button>`;
     wrap.insertBefore(chip, input);
   });
 }
@@ -1018,7 +933,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// âââ INIT ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ INIT Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 render();
 </script>
 </body>
