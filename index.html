@@ -32,7 +32,7 @@
   .search-wrap { position: relative; }
   .search-wrap input { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 13px; padding: 7px 12px 7px 32px; width: 200px; outline: none; transition: border-color var(--transition); }
   .search-wrap input:focus { border-color: var(--accent); }
-  .search-wrap::before { content: '⌕'; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 15px; pointer-events: none; }
+  .search-wrap::before { content: 'â'; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 15px; pointer-events: none; }
   select { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 13px; padding: 7px 10px; outline: none; cursor: pointer; }
   select:focus { border-color: var(--accent); }
   .view-toggle { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
@@ -137,10 +137,10 @@
 <body>
 
 <header>
-  <div class="logo">⬡ <span>Vault</span></div>
+  <div class="logo">â¬¡ <span>Vault</span></div>
   <div class="header-controls">
     <div class="search-wrap">
-      <input type="text" id="search-input" placeholder="Search…" oninput="render()">
+      <input type="text" id="search-input" placeholder="Searchâ¦" oninput="render()">
     </div>
     <select id="tag-filter-select" onchange="render()">
       <option value="">All tags</option>
@@ -148,14 +148,14 @@
     <select id="sort-select" onchange="render()">
       <option value="dateAdded-desc">Newest added</option>
       <option value="dateAdded-asc">Oldest added</option>
-      <option value="dateOfPost-desc">Post date ↓</option>
-      <option value="dateOfPost-asc">Post date ↑</option>
-      <option value="title-asc">Title A–Z</option>
+      <option value="dateOfPost-desc">Post date â</option>
+      <option value="dateOfPost-asc">Post date â</option>
+      <option value="title-asc">Title AâZ</option>
       <option value="custom">Custom order</option>
     </select>
     <div class="view-toggle">
-      <button class="view-btn active" id="btn-card" onclick="setView('card')" title="Card view">⊞</button>
-      <button class="view-btn" id="btn-list" onclick="setView('list')" title="List view">☰</button>
+      <button class="view-btn active" id="btn-card" onclick="setView('card')" title="Card view">â</button>
+      <button class="view-btn" id="btn-list" onclick="setView('list')" title="List view">â°</button>
     </div>
     <span class="count-badge" id="count-badge"></span>
     <button class="add-btn" onclick="openModal()">+ Add</button>
@@ -173,7 +173,7 @@
     <h2 id="modal-title">Add to Vault</h2>
     <div class="form-group">
       <label>URL</label>
-      <input type="url" id="modal-url" placeholder="https://…">
+      <input type="url" id="modal-url" placeholder="https://â¦">
     </div>
     <div class="form-group">
       <label>Title</label>
@@ -181,7 +181,7 @@
     </div>
     <div class="form-group">
       <label>Note</label>
-      <textarea id="modal-note" placeholder="Optional note…"></textarea>
+      <textarea id="modal-note" placeholder="Optional noteâ¦"></textarea>
     </div>
     <div class="form-group">
       <label>Type</label>
@@ -198,7 +198,7 @@
     <div class="form-group">
       <label>Tags</label>
       <div class="tags-input-wrap" id="tags-input-wrap" onclick="document.getElementById('tags-inline-input').focus()">
-        <input class="tags-inline-input" id="tags-inline-input" placeholder="Type tag, press Enter…" maxlength="40">
+        <input class="tags-inline-input" id="tags-inline-input" placeholder="Type tag, press Enterâ¦" maxlength="40">
       </div>
     </div>
     <div class="modal-actions">
@@ -210,7 +210,7 @@
 </div>
 
 <script>
-// ─── DATA ────────────────────────────────────────────────────────────────────
+// âââ DATA ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 let items = [
   {
     "id": "1",
@@ -547,9 +547,58 @@ let items = [
       "Creative Tools"
     ]
   }
+,
+  {
+    "id": "24",
+    "title": "Ben Johnson, CFA",
+    "url": "https://x.com/mstarbenjohnson/status/2037571241872093625",
+    "type": "link",
+    "note": "",
+    "dateAdded": "2026-03-27",
+    "dateOfPost": "2026-03-27",
+    "tags": [
+      "Investments",
+      "ETFs",
+      "Index Investing",
+      "Passive Management",
+      "Investment Research"
+    ]
+  },
+  {
+    "id": "25",
+    "title": "Kieran Goodwin",
+    "url": "https://x.com/kieranwgoodwin/status/2037551988217426126",
+    "type": "link",
+    "note": "",
+    "dateAdded": "2026-03-27",
+    "dateOfPost": "2026-03-27",
+    "tags": [
+      "Investments",
+      "Credit Markets",
+      "Private Credit",
+      "Quantitative Finance",
+      "Banking"
+    ]
+  },
+  {
+    "id": "26",
+    "title": "Google AI Studio",
+    "url": "https://x.com/googleaistudio/status/2037190639021154820",
+    "type": "link",
+    "note": "",
+    "dateAdded": "2026-03-27",
+    "dateOfPost": "2026-03-27",
+    "tags": [
+      "AI",
+      "Generative AI",
+      "Gemini",
+      "AI Development",
+      "Google"
+    ]
+  }
 ];
 
-// ─── STATE ───────────────────────────────────────────────────────────────────
+// âââ STATE âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 let currentView = 'card';
 let customOrder = null;
 let dragSrcId = null;
@@ -557,7 +606,7 @@ let editingId = null;
 let activeTagFilter = '';
 let modalTags = [];
 
-// ─── UTILS ───────────────────────────────────────────────────────────────────
+// âââ UTILS âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function getDomain(url) {
   try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return ''; }
 }
@@ -584,7 +633,7 @@ function generateId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 }
 
-// ─── FILTER / SORT ───────────────────────────────────────────────────────────
+// âââ FILTER / SORT âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function getFiltered() {
   const q = document.getElementById('search-input').value.trim().toLowerCase();
   const sort = document.getElementById('sort-select').value;
@@ -620,7 +669,7 @@ function getFiltered() {
   return filtered;
 }
 
-// ─── TAG FILTER BAR ──────────────────────────────────────────────────────────
+// âââ TAG FILTER BAR ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function buildTagFilterBar() {
   const allTags = {};
   items.forEach(item => (item.tags||[]).forEach(t => { allTags[t] = (allTags[t]||0) + 1; }));
@@ -631,7 +680,7 @@ function buildTagFilterBar() {
 
   let html = '<span class="tfl">Filter:</span>';
   if (activeTagFilter) {
-    html += `<button class="filter-tag clear-all" onclick="clearTagFilter()">✕ Clear</button>`;
+    html += `<button class="filter-tag clear-all" onclick="clearTagFilter()">â Clear</button>`;
   }
   sorted.forEach(tag => {
     const active = activeTagFilter === tag ? ' active' : '';
@@ -665,9 +714,9 @@ function clearTagFilter() {
   render();
 }
 
-// ─── RENDER ───────────────────────────────────────────────────────────────────
+// âââ RENDER âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function render() {
-  // sync tag filter select → activeTagFilter
+  // sync tag filter select â activeTagFilter
   const selVal = document.getElementById('tag-filter-select').value;
   if (selVal !== activeTagFilter && selVal !== undefined) {
     activeTagFilter = selVal;
@@ -698,7 +747,7 @@ function renderCard(item) {
   const noteEl = item.note ? `<div class="card-note">${escHtml(item.note)}</div>` : '';
 
   const tagsHtml = (item.tags||[]).map(tag =>
-    `<span class="tag">${escHtml(tag)}<button class="tag-remove" onclick="removeTag('${escHtml(item.id)}','${escHtml(tag)}')" title="Remove tag">×</button></span>`
+    `<span class="tag">${escHtml(tag)}<button class="tag-remove" onclick="removeTag('${escHtml(item.id)}','${escHtml(tag)}')" title="Remove tag">Ã</button></span>`
   ).join('');
 
   const dateDisplay = item.dateOfPost
@@ -708,14 +757,14 @@ function renderCard(item) {
   return `
 <div class="card" data-id="${escHtml(item.id)}" draggable="true">
   <div class="card-header">
-    <span class="drag-handle" title="Drag to reorder">⠿</span>
+    <span class="drag-handle" title="Drag to reorder">â ¿</span>
     ${favicon}
     <div class="card-title-wrap">
       <div class="card-title">${titleContent}</div>
       ${domainEl}
     </div>
     <div class="card-actions">
-      <button class="icon-btn" onclick="openModal('${escHtml(item.id)}')" title="Edit">✎</button>
+      <button class="icon-btn" onclick="openModal('${escHtml(item.id)}')" title="Edit">â</button>
     </div>
   </div>
   ${noteEl}
@@ -730,7 +779,7 @@ function renderCard(item) {
 </div>`;
 }
 
-// ─── QUICK TAG ────────────────────────────────────────────────────────────────
+// âââ QUICK TAG ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function openQuickTag(itemId) {
   const card = document.querySelector(`[data-id="${itemId}"]`);
   if (!card) return;
@@ -740,7 +789,7 @@ function openQuickTag(itemId) {
 
   const wrap = document.createElement('div');
   wrap.className = 'quick-tag-input-wrap';
-  wrap.innerHTML = `<input class="quick-tag-input" type="text" placeholder="tag name…" maxlength="40">`;
+  wrap.innerHTML = `<input class="quick-tag-input" type="text" placeholder="tag nameâ¦" maxlength="40">`;
 
   // Insert before the add button
   const addBtn = tagsEl.querySelector('.tag-add-btn');
@@ -771,7 +820,7 @@ function openQuickTag(itemId) {
   }, 200));
 }
 
-// ─── REMOVE TAG ───────────────────────────────────────────────────────────────
+// âââ REMOVE TAG âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function removeTag(itemId, tag) {
   const item = items.find(i => i.id === itemId);
   if (!item) return;
@@ -779,7 +828,7 @@ function removeTag(itemId, tag) {
   render();
 }
 
-// ─── DRAG & DROP ─────────────────────────────────────────────────────────────
+// âââ DRAG & DROP âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function initDragDrop() {
   const grid = document.getElementById('card-grid');
 
@@ -828,7 +877,7 @@ function initDragDrop() {
   });
 }
 
-// ─── VIEW ────────────────────────────────────────────────────────────────────
+// âââ VIEW ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function setView(v) {
   currentView = v;
   const grid = document.getElementById('card-grid');
@@ -838,7 +887,7 @@ function setView(v) {
   render();
 }
 
-// ─── MODAL ────────────────────────────────────────────────────────────────────
+// âââ MODAL ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function openModal(id) {
   editingId = id || null;
   modalTags = [];
@@ -886,7 +935,7 @@ function renderModalTags() {
   modalTags.forEach(tag => {
     const chip = document.createElement('span');
     chip.className = 'tags-input-tag';
-    chip.innerHTML = `${escHtml(tag)}<button onclick="removeModalTag('${escHtml(tag)}')" type="button">×</button>`;
+    chip.innerHTML = `${escHtml(tag)}<button onclick="removeModalTag('${escHtml(tag)}')" type="button">Ã</button>`;
     wrap.insertBefore(chip, input);
   });
 }
@@ -969,7 +1018,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// ─── INIT ────────────────────────────────────────────────────────────────────
+// âââ INIT ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 render();
 </script>
 </body>
