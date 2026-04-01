@@ -37,7 +37,7 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;min-height:100vh;line-height:1.5;}
 
-/* ── HEADER ── */
+/* ââ HEADER ââ */
 header{
   display:flex;align-items:center;gap:12px;flex-wrap:wrap;
   padding:14px 24px;border-bottom:1px solid var(--border);
@@ -54,7 +54,7 @@ header{
   outline:none;transition:border-color var(--transition),width var(--transition);
 }
 .search-wrap input:focus{border-color:var(--c-ai);width:230px;}
-.search-wrap::before{content:'⌕';position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--text-dim);font-size:14px;pointer-events:none;}
+.search-wrap::before{content:'â';position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--text-dim);font-size:14px;pointer-events:none;}
 .hdr-select{
   background:var(--surface2);border:1px solid var(--border2);border-radius:8px;
   color:var(--text);font-size:12px;padding:6px 10px;outline:none;cursor:pointer;
@@ -70,10 +70,10 @@ header{
 .add-btn:hover{opacity:0.82;}
 .count{font-size:11px;color:var(--text-dim);white-space:nowrap;}
 
-/* ── MAIN ── */
+/* ââ MAIN ââ */
 main{padding:20px 24px;max-width:1700px;margin:0 auto;}
 
-/* ── FILTER BARS ── */
+/* ââ FILTER BARS ââ */
 .filter-section{margin-bottom:18px;display:flex;flex-direction:column;gap:8px;}
 .filter-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
 .filter-label{font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--text-muted);width:52px;flex-shrink:0;}
@@ -101,10 +101,10 @@ main{padding:20px 24px;max-width:1700px;margin:0 auto;}
 .clear-btn{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:11px;padding:4px 8px;border-radius:6px;transition:color var(--transition);}
 .clear-btn:hover{color:var(--text-dim);}
 
-/* ── GRID ── */
+/* ââ GRID ââ */
 #card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;}
 
-/* ── CARD ── */
+/* ââ CARD ââ */
 .card{
   background:var(--surface);
   border:1px solid var(--border);
@@ -194,7 +194,7 @@ main{padding:20px 24px;max-width:1700px;margin:0 auto;}
 .card-date{font-size:10px;color:var(--text-muted);}
 .card-url{font-size:10px;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:140px;}
 
-/* ── LIST VIEW ── */
+/* ââ LIST VIEW ââ */
 #card-grid.list-view{grid-template-columns:1fr;}
 #card-grid.list-view .card{flex-direction:row;align-items:flex-start;gap:14px;padding:12px 16px;}
 #card-grid.list-view .card-top{flex:0 0 260px;}
@@ -202,12 +202,12 @@ main{padding:20px 24px;max-width:1700px;margin:0 auto;}
 #card-grid.list-view .card-tags{flex:0 0 auto;flex-direction:column;align-items:flex-start;gap:3px;min-width:120px;}
 #card-grid.list-view .card-footer{flex:0 0 80px;flex-direction:column;align-items:flex-end;}
 
-/* ── EMPTY STATE ── */
+/* ââ EMPTY STATE ââ */
 .empty{padding:60px;text-align:center;color:var(--text-dim);}
 .empty h3{font-size:18px;font-weight:600;margin-bottom:8px;color:var(--text);}
 .empty p{font-size:13px;}
 
-/* ── MODAL ── */
+/* ââ MODAL ââ */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;}
 .modal-overlay.hidden{display:none;}
 .modal{background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:24px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;}
@@ -247,21 +247,21 @@ main{padding:20px 24px;max-width:1700px;margin:0 auto;}
 <body>
 
 <header>
-  <div class="logo">⬡ <em>Vault</em></div>
+  <div class="logo">â¬¡ <em>Vault</em></div>
   <div class="header-right">
     <div class="search-wrap">
-      <input type="text" id="search-input" placeholder="Search…" oninput="render()">
+      <input type="text" id="search-input" placeholder="Searchâ¦" oninput="render()">
     </div>
     <select class="hdr-select" id="sort-select" onchange="render()">
       <option value="dateAdded-desc">Newest first</option>
       <option value="dateAdded-asc">Oldest first</option>
-      <option value="dateOfPost-desc">Post date ↓</option>
-      <option value="title-asc">A → Z</option>
+      <option value="dateOfPost-desc">Post date â</option>
+      <option value="title-asc">A â Z</option>
       <option value="custom">Custom order</option>
     </select>
     <div class="view-toggle">
-      <button class="vbtn active" id="btn-card" onclick="setView('card')" title="Card view">⊞</button>
-      <button class="vbtn" id="btn-list" onclick="setView('list')" title="List view">☰</button>
+      <button class="vbtn active" id="btn-card" onclick="setView('card')" title="Card view">â</button>
+      <button class="vbtn" id="btn-list" onclick="setView('list')" title="List view">â°</button>
     </div>
     <button class="add-btn" onclick="openModal(null)">+ Add</button>
     <span class="count" id="count-badge">26 items</span>
@@ -274,21 +274,21 @@ main{padding:20px 24px;max-width:1700px;margin:0 auto;}
     <div class="filter-row" id="domain-filter-row">
       <span class="filter-label">Domain</span>
       <button class="fbtn active-domain" data-domain="" onclick="setDomain('')">All</button>
-      <button class="fbtn" data-domain="AI" onclick="setDomain('AI')">🤖 AI</button>
-      <button class="fbtn" data-domain="Finance" onclick="setDomain('Finance')">💰 Finance</button>
-      <button class="fbtn" data-domain="Design" onclick="setDomain('Design')">🎨 Design</button>
-      <button class="fbtn" data-domain="Business" onclick="setDomain('Business')">🏢 Business</button>
-      <button class="fbtn" data-domain="Tech" onclick="setDomain('Tech')">⚙️ Tech</button>
-      <button class="fbtn" data-domain="World" onclick="setDomain('World')">🌍 World</button>
+      <button class="fbtn" data-domain="AI" onclick="setDomain('AI')">ð¤ AI</button>
+      <button class="fbtn" data-domain="Finance" onclick="setDomain('Finance')">ð° Finance</button>
+      <button class="fbtn" data-domain="Design" onclick="setDomain('Design')">ð¨ Design</button>
+      <button class="fbtn" data-domain="Business" onclick="setDomain('Business')">ð¢ Business</button>
+      <button class="fbtn" data-domain="Tech" onclick="setDomain('Tech')">âï¸ Tech</button>
+      <button class="fbtn" data-domain="World" onclick="setDomain('World')">ð World</button>
     </div>
     <div class="filter-row" id="lens-filter-row">
       <span class="filter-label">Lens</span>
       <button class="fbtn" data-lens="" onclick="setLens('')">All</button>
-      <button class="fbtn" data-lens="tool" onclick="setLens('tool')">🛠 Try It</button>
-      <button class="fbtn" data-lens="read" onclick="setLens('read')">📖 Read</button>
-      <button class="fbtn" data-lens="follow" onclick="setLens('follow')">👤 Follow</button>
-      <button class="fbtn" data-lens="research" onclick="setLens('research')">🔬 Research</button>
-      <button class="fbtn" data-lens="idea" onclick="setLens('idea')">💡 Idea</button>
+      <button class="fbtn" data-lens="tool" onclick="setLens('tool')">ð  Try It</button>
+      <button class="fbtn" data-lens="read" onclick="setLens('read')">ð Read</button>
+      <button class="fbtn" data-lens="follow" onclick="setLens('follow')">ð¤ Follow</button>
+      <button class="fbtn" data-lens="research" onclick="setLens('research')">ð¬ Research</button>
+      <button class="fbtn" data-lens="idea" onclick="setLens('idea')">ð¡ Idea</button>
     </div>
     <div class="filter-row" id="tag-filter-row" style="display:none;">
       <span class="filter-label">Tag</span>
@@ -305,7 +305,7 @@ main{padding:20px 24px;max-width:1700px;margin:0 auto;}
     <h2 id="modal-title">Add to Vault</h2>
     <div class="form-group">
       <label>URL</label>
-      <input type="url" id="modal-url" placeholder="https://…">
+      <input type="url" id="modal-url" placeholder="https://â¦">
     </div>
     <div class="form-group">
       <label>Title</label>
@@ -319,22 +319,22 @@ main{padding:20px 24px;max-width:1700px;margin:0 auto;}
       <div class="form-group">
         <label>Domain</label>
         <select id="modal-domain">
-          <option value="AI">🤖 AI</option>
-          <option value="Finance">💰 Finance</option>
-          <option value="Design">🎨 Design</option>
-          <option value="Business">🏢 Business</option>
-          <option value="Tech">⚙️ Tech</option>
-          <option value="World">🌍 World</option>
+          <option value="AI">ð¤ AI</option>
+          <option value="Finance">ð° Finance</option>
+          <option value="Design">ð¨ Design</option>
+          <option value="Business">ð¢ Business</option>
+          <option value="Tech">âï¸ Tech</option>
+          <option value="World">ð World</option>
         </select>
       </div>
       <div class="form-groub>
         <label>Lens</label>
         <select id="modal-lens">
-          <option value="tool">🛠 Try It</option>
-          <option value="read">📖 Read</option>
-          <option value="follow">👤 Follow</option>
-          <option value="research">🔬 Research</option>
-          <option value="idea">💡 Idea</option>
+          <option value="tool">ð  Try It</option>
+          <option value="read">ð Read</option>
+          <option value="follow">ð¤ Follow</option>
+          <option value="research">ð¬ Research</option>
+          <option value="idea">ð¡ Idea</option>
         </select>
       </div>
     </div>
@@ -354,7 +354,7 @@ main{padding:20px 24px;max-width:1700px;margin:0 auto;}
     <div class="form-group">
       <label>Tags (press Enter or comma to add)</label>
       <div class="tags-input-wrap" id="tags-input-wrap" onclick="document.getElementById('tags-inline-input').focus()">
-        <input type="text" id="tags-inline-input" placeholder="add tag…" autocomplete="off">
+        <input type="text" id="tags-inline-input" placeholder="add tagâ¦" autocomplete="off">
       </div>
     </div>
     <div class="modal-actions">
@@ -366,7 +366,7 @@ main{padding:20px 24px;max-width:1700px;margin:0 auto;}
 </div>
 
 <script>
-// ─── DATA ─└──────────────────────────────────────────────────────────────────
+// âââ DATA ââÂââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 let items = [
   {
     "id": "1",
@@ -813,7 +813,7 @@ let items = [
   },
   {
     "id": "27",
-    "title": "Josh Kale  Pretext: Magazine-Style Text Layout for the Web",
+    "title": "Josh Kale Â Pretext: Magazine-Style Text Layout for the Web",
     "url": "https://x.com/JoshKale/status/2037900758750761053",
     "type": "link",
     "note": "A Midjourney engineer solved a 30-year web problem: Pretext is a tiny open-source library that lets websites lay out text the way magazines do, with proper multi-column text flow.",
@@ -831,7 +831,7 @@ let items = [
   },
   {
     "id": "28",
-    "title": "The Fun They Had  Isaac Asimov Short Story",
+    "title": "The Fun They Had Â Isaac Asimov Short Story",
     "url": "https://blogs.atu.edu/morelan/files/2020/06/TheFunTheyHad.pdf",
     "type": "link",
     "note": "Asimov's 1951 short story about kids in 2157 discovering a real printed book. A quick read that hits differently as AI reshapes education and what we value in learning.",
@@ -849,7 +849,7 @@ let items = [
   },
   {
     "id": "29",
-    "title": "Ollama x MLX  Fastest Local LLMs on Apple Silicon",
+    "title": "Ollama x MLX Â Fastest Local LLMs on Apple Silicon",
     "url": "https://ollama.com/blog/mlx",
     "type": "link",
     "note": "Ollama rebuilt on Apple MLX delivers the fastest local model inference on Apple Silicon. Includes NVFP4 support for production-quality results and smarter caching that benefits agentic tools like Claude Code.",
@@ -867,7 +867,7 @@ let items = [
   },
   {
     "id": "30",
-    "title": "Ollama Pi  Hackable Coding Agent Behind OpenClaw",
+    "title": "Ollama Pi Â Hackable Coding Agent Behind OpenClaw",
     "url": "https://pi.dev",
     "type": "link",
     "note": "Pi is a minimal, extensible coding agent that powers OpenClaw, launchable via Ollama in one command. Supports subagents, autoresearch loops, and custom packages for building your own AI coding workflows.",
@@ -903,10 +903,10 @@ let items = [
   },
   {
     "id": "32",
-    "title": "Josh Kale  Pretext: Magazine-Style Web Text Layout at 120fps",
+    "title": "Josh Kale Â Pretext: Magazine-Style Web Text Layout at 120fps",
     "url": "https://x.com/joshkale/status/2037900758750761053",
     "type": "link",
-    "note": "A Midjourney engineer built Pretext, a tiny library that lets websites lay out text like magazines at 120fps  text flowing around images, wrapping into columns, any shape. Something impossible on the web for 30 years, now 500x faster than existing approaches.",
+    "note": "A Midjourney engineer built Pretext, a tiny library that lets websites lay out text like magazines at 120fps Â text flowing around images, wrapping into columns, any shape. Something impossible on the web for 30 years, now 500x faster than existing approaches.",
     "dateAdded": "2026-03-31",
     "dateOfPost": "2026-03-28",
     "domain": "Tech",
@@ -915,10 +915,10 @@ let items = [
   },
   {
     "id": "33",
-    "title": "Ben Johnson CFA  AQR Files Long/Short Interval Fund with SEC",
+    "title": "Ben Johnson CFA Â AQR Files Long/Short Interval Fund with SEC",
     "url": "https://x.com/mstarbenjohnson/status/2037571241872093625",
     "type": "link",
-    "note": "Morningstar's Ben Johnson flags AQR filing with the SEC for a long/short interval fund  expanding tax-aware direct indexing strategies to retail investors through the interval fund structure.",
+    "note": "Morningstar's Ben Johnson flags AQR filing with the SEC for a long/short interval fund Â expanding tax-aware direct indexing strategies to retail investors through the interval fund structure.",
     "dateAdded": "2026-03-31",
     "dateOfPost": "2026-03-27",
     "domain": "Finance",
@@ -927,10 +927,10 @@ let items = [
   },
   {
     "id": "34",
-    "title": "Kieran Goodwin  $CCLFX Liquidity Hole: $5.3B Shortfall Analysis",
+    "title": "Kieran Goodwin Â $CCLFX Liquidity Hole: $5.3B Shortfall Analysis",
     "url": "https://x.com/kieranwgoodwin/status/2037551988217426126",
     "type": "link",
-    "note": "Detailed breakdown of Cliffwater Corporate Lending Fund ($CCLFX) questioning its ability to meet redemption queues  projects a $5.3B liquidity hole after accounting for maturing loans, max borrowing capacity, and $10.9B in unfunded commitments.",
+    "note": "Detailed breakdown of Cliffwater Corporate Lending Fund ($CCLFX) questioning its ability to meet redemption queues Â projects a $5.3B liquidity hole after accounting for maturing loans, max borrowing capacity, and $10.9B in unfunded commitments.",
     "dateAdded": "2026-03-31",
     "dateOfPost": "2026-03-27",
     "domain": "Finance",
@@ -939,7 +939,7 @@ let items = [
   },
   {
     "id": "35",
-    "title": "The Fun They Had  Isaac Asimov Sci-Fi Short Story",
+    "title": "The Fun They Had Â Isaac Asimov Sci-Fi Short Story",
     "url": "https://blogs.atu.edu/morelan/files/2020/06/TheFunTheyHad.pdf",
     "type": "link",
     "note": "Classic Asimov short story imagining children in the future learning from computerized teachers, saved to read. A short, sharp meditation on technology and what we lose when we optimize education.",
@@ -951,10 +951,10 @@ let items = [
   },
   {
     "id": "36",
-    "title": "Google AI Studio  Gemini 3.1 Flash Live API for Real-Time Voice & Vision Agents",
+    "title": "Google AI Studio Â Gemini 3.1 Flash Live API for Real-Time Voice & Vision Agents",
     "url": "https://x.com/googleaistudio/status/2037190639021154820",
     "type": "link",
-    "note": "Gemini 3.1 Flash Live launches via the Gemini Live API  enables real-time conversational voice/vision agents with dramatically lower latency, better background noise handling, 90+ language support, and improved instruction following.",
+    "note": "Gemini 3.1 Flash Live launches via the Gemini Live API Â enables real-time conversational voice/vision agents with dramatically lower latency, better background noise handling, 90+ language support, and improved instruction following.",
     "dateAdded": "2026-03-31",
     "dateOfPost": "2026-03-26",
     "domain": "AI",
@@ -963,10 +963,10 @@ let items = [
   },
   {
     "id": "37",
-    "title": "Matt Gottshall CFP  The Full Value of Comprehensive Financial Planning",
+    "title": "Matt Gottshall CFP Â The Full Value of Comprehensive Financial Planning",
     "url": "https://x.com/matt_gottshall/status/2037161742690574473",
     "type": "link",
-    "note": "Viral thread walking through what a real financial planning practice covers: investments, taxes included, equity comp, estate docs via Wealth.com, team of 11  all in one fee. Good model for how to position wealth management to skeptical prospects.",
+    "note": "Viral thread walking through what a real financial planning practice covers: investments, taxes included, equity comp, estate docs via Wealth.com, team of 11 Â all in one fee. Good model for how to position wealth management to skeptical prospects.",
     "dateAdded": "2026-03-31",
     "dateOfPost": "2026-03-26",
     "domain": "Finance",
@@ -975,10 +975,10 @@ let items = [
   },
   {
     "id": "38",
-    "title": "Mistral AI  Voxtral TTS: Open-Weight Expressive Text-to-Speech",
+    "title": "Mistral AI Â Voxtral TTS: Open-Weight Expressive Text-to-Speech",
     "url": "https://x.com/mistralai/status/2037183026539483288",
     "type": "link",
-    "note": "Mistral launches Voxtral TTS  open-weight model for realistic, emotionally expressive speech with very low latency. Supports 9 languages and diverse dialects. Flagged as a potential voice integration for Mina.",
+    "note": "Mistral launches Voxtral TTS Â open-weight model for realistic, emotionally expressive speech with very low latency. Supports 9 languages and diverse dialects. Flagged as a potential voice integration for Mina.",
     "dateAdded": "2026-03-31",
     "dateOfPost": "2026-03-26",
     "domain": "AI",
@@ -987,10 +987,10 @@ let items = [
   },
   {
     "id": "39",
-    "title": "el.cine  CapCut AI Video Studio: Timeline-Free Editing",
+    "title": "el.cine Â CapCut AI Video Studio: Timeline-Free Editing",
     "url": "https://x.com/ehuanglu/status/2036949499898454344",
     "type": "link",
-    "note": "AI consultant and filmmaker el.cine shares CapCut's timeline-free AI Video Studio on the web  relevant for AI-driven content production workflows where speed and automation matter.",
+    "note": "AI consultant and filmmaker el.cine shares CapCut's timeline-free AI Video Studio on the web Â relevant for AI-driven content production workflows where speed and automation matter.",
     "dateAdded": "2026-03-31",
     "dateOfPost": "2026-03-26",
     "domain": "AI",
@@ -999,7 +999,7 @@ let items = [
   },
   {
     "id": "40",
-    "title": "AQR Research  The Tax Benefits of Pre-Tax Alpha (Direct Indexing Long/Short)",
+    "title": "AQR Research Â The Tax Benefits of Pre-Tax Alpha (Direct Indexing Long/Short)",
     "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6438799",
     "type": "link",
     "note": "AQR paper demonstrating that pre-tax alpha materially enhances the tax benefits of tax-aware long/short equity strategies, with stronger effects under leverage and longer horizons. Directly relevant to the value proposition of direct indexing vs long-only.",
@@ -1011,10 +1011,10 @@ let items = [
   },
   {
     "id": "41",
-    "title": "Simon B. Støvring  brrr: Instant Push Notifications to Your Own Devices",
+    "title": "Simon B. StÃ¸vring Â brrr: Instant Push Notifications to Your Own Devices",
     "url": "https://x.com/simonbs/status/2036798027990474790",
     "type": "link",
-    "note": "brrr is an iOS app that sends push notifications to your own devices instantly  no signup, no dashboard, no nonsense. Flagged as a potential Claude automation tool for notifying yourself when a workflow completes.",
+    "note": "brrr is an iOS app that sends push notifications to your own devices instantly Â no signup, no dashboard, no nonsense. Flagged as a potential Claude automation tool for notifying yourself when a workflow completes.",
     "dateAdded": "2026-03-31",
     "dateOfPost": "2026-03-25",
     "domain": "Tech",
@@ -1023,7 +1023,7 @@ let items = [
   },
   {
     "id": "42",
-    "title": "AP News  Trump's 15-Point Ceasefire Plan to Iran via Pakistan",
+    "title": "AP News Â Trump's 15-Point Ceasefire Plan to Iran via Pakistan",
     "url": "https://apnews.com/article/iran-us-ceasefire-trump-15-point-plan-pakistan-march-2026",
     "type": "link",
     "note": "Trump administration submitted a 15-point ceasefire plan to Iran via Pakistani intermediaries, while deploying 1,000+ troops from the 82nd Airborne and two Marine units to the Middle East. Iran denies negotiations are happening.",
@@ -1035,10 +1035,10 @@ let items = [
   },
   {
     "id": "43",
-    "title": "JJ Englert  How to Set Up Claude Cowork as an AI Chief of Staff",
+    "title": "JJ Englert Â How to Set Up Claude Cowork as an AI Chief of Staff",
     "url": "https://x.com/jjenglert/status/2036892413289996449",
     "type": "link",
-    "note": "9-step breakdown of configuring Claude Cowork with global instructions, connectors, folder structure, and skills  including a multi-agent advisory board with 5 personas (operator, skeptic, customer advocate, finance partner, legal advisor) and a thought leadership pipeline.",
+    "note": "9-step breakdown of configuring Claude Cowork with global instructions, connectors, folder structure, and skills Â including a multi-agent advisory board with 5 personas (operator, skeptic, customer advocate, finance partner, legal advisor) and a thought leadership pipeline.",
     "dateAdded": "2026-03-31",
     "dateOfPost": "2026-03-25",
     "domain": "AI",
@@ -1047,7 +1047,7 @@ let items = [
   },
   {
     "id": "44",
-    "title": "Millie Marconi  /last30days: Open-Source Claude Code Skill for Real-Time Prompt Research",
+    "title": "Millie Marconi Â /last30days: Open-Source Claude Code Skill for Real-Time Prompt Research",
     "url": "https://x.com/milliemarconnni/status/2036363493478375797",
     "type": "link",
     "note": "An open-source MIT-licensed Claude Code skill that scans Reddit and X from the last 30 days on any topic and returns copy-paste-ready prompts based on what is actually working right now, not six months ago.",
@@ -1059,10 +1059,10 @@ let items = [
   },
   {
     "id": "45",
-    "title": "LinkedIn  New Research on a Key Question in Tax-Aware Direct Indexing",
+    "title": "LinkedIn Â New Research on a Key Question in Tax-Aware Direct Indexing",
     "url": "https://www.linkedin.com/posts/new-research-explores-a-key-question-in-tax-aware-share-7440774221699387392-pwd5",
     "type": "link",
-    "note": "LinkedIn post on new research exploring a key question in tax-aware share/direct indexing strategies  closely related to the AQR pre-tax alpha paper circulating the same week.",
+    "note": "LinkedIn post on new research exploring a key question in tax-aware share/direct indexing strategies Â closely related to the AQR pre-tax alpha paper circulating the same week.",
     "dateAdded": "2026-03-31",
     "dateOfPost": "2026-03-25",
     "domain": "Finance",
@@ -1071,10 +1071,10 @@ let items = [
   },
   {
     "id": "46",
-    "title": "Renoise AI  Program Video Ads at Scale with Claude Code + Seedance 2.0",
+    "title": "Renoise AI Â Program Video Ads at Scale with Claude Code + Seedance 2.0",
     "url": "https://x.com/renoiseai/status/2036089896503529521",
     "type": "link",
-    "note": "Renoise combines Claude Code with Seedance 2.0 to automate video ad production  one product photo generates hundreds of finished video creatives. Designed to scale ad production 100x for e-commerce brands.",
+    "note": "Renoise combines Claude Code with Seedance 2.0 to automate video ad production Â one product photo generates hundreds of finished video creatives. Designed to scale ad production 100x for e-commerce brands.",
     "dateAdded": "2026-03-31",
     "dateOfPost": "2026-03-23",
     "domain": "AI",
@@ -1083,7 +1083,7 @@ let items = [
   }
 ];
 
-// ─── STATE ───────────────────────────────────────────────────────────────────
+// âââ STATE âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 let currentView    = 'card';
 let customOrder    = null;
 let dragSrcId      = null;
@@ -1094,7 +1094,7 @@ let activeTag      = '';
 let modalTags      = [,
         {
             "id": "47",
-            "title": "Renoise  AI Video Programming Tool",
+            "title": "Renoise Â AI Video Programming Tool",
             "url": "https://x.com/renoiseai/status/2036089896503529521",
             "type": "link",
             "note": "AI video generation tool that programs video via code rather than manual editing. Integrates with Claude Code and Seedance 2.0, enabling batch creation and iteration of high-quality videos at scale.",
@@ -1130,10 +1130,10 @@ let modalTags      = [,
         },
         {
             "id": "50",
-            "title": "Simon Støvring  Using Claude with Coding Assistant in Xcode 26",
+            "title": "Simon StÃ¸vring Â Using Claude with Coding Assistant in Xcode 26",
             "url": "https://simonbs.dev/posts/using-claude-with-coding-assistant-in-xcode-26/",
             "type": "link",
-            "note": "iOS developer Simon B. Støvring walks through adding Claude Sonnet 4 as an AI model provider in Xcode 26's Coding Assistant. Requires M1 Mac running macOS 26 Tahoe.",
+            "note": "iOS developer Simon B. StÃ¸vring walks through adding Claude Sonnet 4 as an AI model provider in Xcode 26's Coding Assistant. Requires M1 Mac running macOS 26 Tahoe.",
             "dateAdded": "2026-03-25",
             "dateOfPost": "2026-03-25",
             "domain": "Tech",
@@ -1142,7 +1142,7 @@ let modalTags      = [,
         },
         {
             "id": "51",
-            "title": "el.cine  CapCut AI Video Editing Features",
+            "title": "el.cine Â CapCut AI Video Editing Features",
             "url": "https://x.com/ehuanglu/status/2036949499898454344",
             "type": "link",
             "note": "Content creator el.cine covers CapCut's latest AI-powered video editing tools, showing how AI is enabling professional-quality video content creation without traditional editing skills.",
@@ -1154,7 +1154,7 @@ let modalTags      = [,
         },
         {
             "id": "52",
-            "title": "AQR  The Tax Benefits of Pre-Tax Alpha (Direct Indexing)",
+            "title": "AQR Â The Tax Benefits of Pre-Tax Alpha (Direct Indexing)",
             "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6438799",
             "type": "link",
             "note": "AQR research paper showing pre-tax alpha materially enhances tax benefits in long-short beta-one equity strategies. Pre-tax alpha grows the NAV base and creates new positions, compounding tax advantages over time. Directly relevant to direct indexing advisory.",
@@ -1166,7 +1166,7 @@ let modalTags      = [,
         },
         {
             "id": "53",
-            "title": "Mistral AI  Voxtral TTS Open-Weight Text-to-Speech Model",
+            "title": "Mistral AI Â Voxtral TTS Open-Weight Text-to-Speech Model",
             "url": "https://x.com/mistralai/status/2037183026539483288",
             "type": "link",
             "note": "Mistral releases Voxtral TTS, a frontier open-weight model for natural, expressive, ultra-fast text-to-speech. Supports 9 languages with diverse dialects and very low latency. Flagged by Mike as a potential addition to Mina.",
@@ -1178,7 +1178,7 @@ let modalTags      = [,
         },
         {
             "id": "54",
-            "title": "Matt Gottshall, CFP  Executive Financial Planning & Equity Compensation",
+            "title": "Matt Gottshall, CFP Â Executive Financial Planning & Equity Compensation",
             "url": "https://x.com/matt_gottshall/status/2037161742690574473",
             "type": "link",
             "note": "Matt Gottshall CFP/ECA at Balanced Wealth Group posts about financial planning for equity-compensated executives, covering estate planning, tax strategy, and wealth management. Co-hosts the Executive Financial Planning Podcast.",
@@ -1190,7 +1190,7 @@ let modalTags      = [,
         },
         {
             "id": "55",
-            "title": "Google AI Studio  Gemini 3.1 Flash Live for Real-Time Conversational Agents",
+            "title": "Google AI Studio Â Gemini 3.1 Flash Live for Real-Time Conversational Agents",
             "url": "https://x.com/googleaistudio/status/2037190639021154820",
             "type": "link",
             "note": "Gemini 3.1 Flash Live enables building real-time conversational AI agents with higher task completion, improved tool triggering, low latency, and support for 90+ languages. Key for voice and multi-modal real-time applications.",
@@ -1202,7 +1202,7 @@ let modalTags      = [,
         },
         {
             "id": "56",
-            "title": "Kieran Goodwin  Contrarian Private Credit & BDC Analysis",
+            "title": "Kieran Goodwin Â Contrarian Private Credit & BDC Analysis",
             "url": "https://x.com/kieranwgoodwin/status/2037551988217426126",
             "type": "link",
             "note": "Kieran Goodwin is a sharp critic of non-traded BDCs and the retail channeling of private credit, arguing these structures violate the original purpose of private credit. Posts incisive analysis as the private credit meltdown unfolds.",
@@ -1214,7 +1214,7 @@ let modalTags      = [,
         },
         {
             "id": "57",
-            "title": "Ben Johnson, CFA  Morningstar ETF & Passive Investing Analysis",
+            "title": "Ben Johnson, CFA Â Morningstar ETF & Passive Investing Analysis",
             "url": "https://x.com/mstarbenjohnson/status/2037571241872093625",
             "type": "link",
             "note": "Ben Johnson CFA, Morningstar Head of Client Solutions, posts data-driven insights on ETF flows, fee trends, and the passive vs. active investing debate. Reliable signal for ETF market dynamics.",
@@ -1226,7 +1226,7 @@ let modalTags      = [,
         },
         {
             "id": "58",
-            "title": "The Fun They Had  Asimov Sci-Fi Short Story Collection",
+            "title": "The Fun They Had Â Asimov Sci-Fi Short Story Collection",
             "url": "https://blogs.atu.edu/morelan/files/2020/06/TheFunTheyHad.pdf",
             "type": "link",
             "note": "PDF collection of sci-fi short stories centered around Isaac Asimov's 1954 classic 'The Fun They Had,' a prescient story about a future child who discovers what school was like when humans taught humans. Still hits hard.",
@@ -1238,10 +1238,10 @@ let modalTags      = [,
         },
         {
             "id": "59",
-            "title": "Josh Kale  Pretext: Magazine-Style Text Layout for the Web at 120fps",
+            "title": "Josh Kale Â Pretext: Magazine-Style Text Layout for the Web at 120fps",
             "url": "https://x.com/joshkale/status/2037900758750761053",
             "type": "link",
-            "note": "A Midjourney engineer open-sourced Pretext, a tiny library that lets websites lay out text like magazines  flowing around images, wrapping into columns, fitting any shape  at 120fps. Fixes a 30-year limitation of web text layout.",
+            "note": "A Midjourney engineer open-sourced Pretext, a tiny library that lets websites lay out text like magazines Â flowing around images, wrapping into columns, fitting any shape Â at 120fps. Fixes a 30-year limitation of web text layout.",
             "dateAdded": "2026-03-28",
             "dateOfPost": "2026-03-28",
             "domain": "Tech",
@@ -1250,7 +1250,7 @@ let modalTags      = [,
         },
         {
             "id": "60",
-            "title": "Ollama  Visual Studio Code Integration via GitHub Copilot",
+            "title": "Ollama Â Visual Studio Code Integration via GitHub Copilot",
             "url": "https://ollama.com",
             "type": "link",
             "note": "VS Code now directly integrates with Ollama via GitHub Copilot, letting developers select any local or cloud model from Ollama for AI coding assistance inside the IDE.",
@@ -1262,7 +1262,7 @@ let modalTags      = [,
         },
         {
             "id": "61",
-            "title": "Ollama Launches Pi  Minimal Coding Agent Behind OpenClaw",
+            "title": "Ollama Launches Pi Â Minimal Coding Agent Behind OpenClaw",
             "url": "https://ollama.com",
             "type": "link",
             "note": "Ollama launches Pi, a minimal coding agent harness that powers OpenClaw and can be adapted to build custom coding agents. Bundled with Ollama for immediate use.",
@@ -1274,7 +1274,7 @@ let modalTags      = [,
         },
         {
             "id": "62",
-            "title": "Ollama  Fastest Local AI on Apple Silicon via MLX",
+            "title": "Ollama Â Fastest Local AI on Apple Silicon via MLX",
             "url": "https://ollama.com",
             "type": "link",
             "note": "Ollama now uses Apple's MLX machine learning framework to achieve maximum performance running local models on Apple silicon, significantly accelerating demanding model workloads on macOS.",
@@ -1286,7 +1286,7 @@ let modalTags      = [,
         },
         {
             "id": "63",
-            "title": "mavgpt  5 Secret Claude Prompt Codes",
+            "title": "mavgpt Â 5 Secret Claude Prompt Codes",
             "url": "https://www.instagram.com/reel/DWWmBJMjcf7/",
             "type": "link",
             "note": "Instagram reel from @mavgpt sharing 5 prompt codes for Claude: /ghost (humanize output to pass AI detectors), ARTIFACTS (build live apps/games/dashboards), OODA (military decision framework), L99 (expert-level responses), /godmode (most aggressive comprehensive mode).",
@@ -1295,10 +1295,27 @@ let modalTags      = [,
             "domain": "AI",
             "lens": "read",
             "tags": ["Claude", "Prompt Engineering", "AI Tips", "Productivity"]
-        }
+        },
+    {
+        "id": "47",
+        "title": "mavgpt — 5 Claude Prompt Codes That Upgrade Any Output",
+        "url": "https://www.instagram.com/reel/DWWmBJMjcf7/",
+        "type": "link",
+        "note": "Viral Instagram reel sharing 5 prompt prefixes for Claude: /ghost (humanize output), ARTIFACTS (build apps live), OODA (military decision framework), L99 (expert-level mode), /godmode (comprehensive responses). Practical prompting shortcuts worth testing.",
+        "dateAdded": "2026-03-31",
+        "dateOfPost": "2026-03-26",
+        "domain": "AI",
+        "lens": "read",
+        "tags": [
+            "Claude",
+            "Prompt Engineering",
+            "AI Productivity",
+            "Prompting Tips"
+        ]
+    }
     ];
 
-// ─── UTILS ───────────────────────────────────────────────────────────────────
+// âââ UTILS âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function getDomain(url) {
   try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return ''; }
 }
@@ -1323,17 +1340,17 @@ function isNew(dateStr) {
 }
 
 const LENS_META = {
-  tool:     { emoji:'🛠', label:'Try It' },
-  read:     { emoji:'📖', label:'Read' },
-  follow:   { emoji:'👤', label:'Follow' },
-  research: { emoji:'🔬', label:'Research' },
-  idea:     { emoji:'💡', label:'Idea' },
+  tool:     { emoji:'ð ', label:'Try It' },
+  read:     { emoji:'ð', label:'Read' },
+  follow:   { emoji:'ð¤', label:'Follow' },
+  research: { emoji:'ð¬', label:'Research' },
+  idea:     { emoji:'ð¡', label:'Idea' },
 };
 const DOMAIN_EMOJI = {
-  AI:'🤖', Finance:'💰', Design:'🎨', Business:'🏢', Tech:'⚙️', World:'🌍'
+  AI:'ð¤', Finance:'ð°', Design:'ð¨', Business:'ð¢', Tech:'âï¸', World:'ð'
 };
 
-// ─── FILTERING ────────────────────────────────────────────────────────────────
+// âââ FILTERING ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function getFiltered() {
   const q    = document.getElementById('search-input').value.trim().toLowerCase();
   const sort = document.getElementById('sort-select').value;
@@ -1358,7 +1375,7 @@ function getFiltered() {
   return filtered;
 }
 
-// ─── DOMAIN / LENS FILTER ────────────────────────────────────────────────────
+// âââ DOMAIN / LENS FILTER ââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function setDomain(d) {
   activeDomain = activeDomain === d ? '' : d;
   document.querySelectorAll('[data-domain]').forEach(el => {
@@ -1378,7 +1395,7 @@ function setTag(t) {
   render();
 }
 
-// ─── TAG FILTER ROW ───────────────────────────────────────────────────────────
+// âââ TAG FILTER ROW âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function buildTagBar(filtered) {
   const counts = {};
   filtered.forEach(item => (item.tags||[]).forEach(t => { counts[t] = (counts[t]||0)+1; }));
@@ -1388,7 +1405,7 @@ function buildTagBar(filtered) {
   if (!sorted.length) { row.style.display='none'; return; }
   row.style.display='flex';
   let html = '';
-  if (activeTag) html += `<button class="clear-btn" onclick="setTag('')">✕ Clear</button>`;
+  if (activeTag) html += `<button class="clear-btn" onclick="setTag('')">â Clear</button>`;
   sorted.forEach(tag => {
     const active = activeTag === tag;
     html += `<button class="fbtn${active?' active-domain':''}" style="${active?'background:rgba(155,109,255,0.15);border-color:var(--c-ai);color:var(--c-ai);':''}" onclick="setTag('${escHtml(tag)}')">${escHtml(tag)}</button>`;
@@ -1396,7 +1413,7 @@ function buildTagBar(filtered) {
   chips.innerHTML = html;
 }
 
-// ─── RENDER ───────────────────────────────────────────────────────────────────
+// âââ RENDER âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function render() {
   const filtered = getFiltered();
   const grid = document.getElementById('card-grid');
@@ -1423,7 +1440,7 @@ function renderCard(item) {
   const noteEl  = item.note ? `<div class="card-note">${escHtml(item.note)}</div>` : '';
   const newBadge = isNew(item.dateAdded) ? `<span class="new-badge">New</span>` : '';
   const tagsHtml = (item.tags||[]).map(tag =>
-    `<span class="tag">${escHtml(tag)}<button class="tag-remove" onclick="removeTag('${escHtml(item.id)}','${escHtml(tag)}')" title="Remove">×</button></span>`
+    `<span class="tag">${escHtml(tag)}<button class="tag-remove" onclick="removeTag('${escHtml(item.id)}','${escHtml(tag)}')" title="Remove">Ã</button></span>`
   ).join('');
   const dateLabel = item.dateOfPost
     ? `Post ${formatDate(item.dateOfPost)}`
@@ -1434,7 +1451,7 @@ function renderCard(item) {
 <div class="card" data-id="${escHtml(item.id)}" data-domain="${escHtml(domain)}" draggable="true">
   ${newBadge}
   <div class="card-top">
-    <span class="drag-handle" title="Drag to reorder">⠿</span>
+    <span class="drag-handle" title="Drag to reorder">â ¿</span>
     ${favicon}
     <div class="card-title-block">
       <div class="card-title">${titleEl}</div>
@@ -1444,7 +1461,7 @@ function renderCard(item) {
       </div>
     </div>
     <div class="card-actions">
-      <button class="icon-btn" onclick="openModal('${escHtml(item.id)}')" title="Edit">✎</button>
+      <button class="icon-btn" onclick="openModal('${escHtml(item.id)}')" title="Edit">â</button>
     </div>
   </div>
   ${noteEl}
@@ -1459,7 +1476,7 @@ function renderCard(item) {
 </div>`;
 }
 
-// ─── QUICK TAG ────────────────────────────────────────────────────────────────
+// âââ QUICK TAG ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function openQuickTag(itemId) {
   const card = document.querySelector(`[data-id="${itemId}"]`);
   if (!card) return;
@@ -1468,7 +1485,7 @@ function openQuickTag(itemId) {
   if (existing) { existing.remove(); return; }
   const wrap = document.createElement('div');
   wrap.className = 'quick-tag-input-wrap';
-  wrap.innerHTML = `<input type="text" placeholder="tag name…" maxlength="40">`;
+  wrap.innerHTML = `<input type="text" placeholder="tag nameâ¦" maxlength="40">`;
   tagsEl.insertBefore(wrap, tagsEl.querySelector('.tag-add-btn'));
   const input = wrap.querySelector('input');
   input.focus();
@@ -1498,7 +1515,7 @@ function removeTag(itemId, tag) {
   render();
 }
 
-// ─── DRAG & DROP ──────────────────────────────────────────────────────────────
+// âââ DRAG & DROP ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function initDragDrop() {
   const grid = document.getElementById('card-grid');
   grid.addEventListener('dragstart', e => {
@@ -1538,7 +1555,7 @@ function initDragDrop() {
   });
 }
 
-// ─── VIEW ─────────────────────────────────────────────────────────────────────
+// âââ VIEW âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function setView(v) {
   currentView = v;
   document.getElementById('card-grid').classList.toggle('list-view', v === 'list');
@@ -1547,7 +1564,7 @@ function setView(v) {
   render();
 }
 
-// ─── MODAL ────────────────────────────────────────────────────────────────────
+// âââ MODAL ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function openModal(id) {
   editingId = id || null;
   modalTags = [];
@@ -1592,7 +1609,7 @@ function renderModalTags() {
   modalTags.forEach(tag => {
     const chip = document.createElement('span');
     chip.className = 'tags-input-tag';
-    chip.innerHTML = `${escHtml(tag)}<button onclick="removeModalTag('${escHtml(tag)}')" type="button">×</button>`;
+    chip.innerHTML = `${escHtml(tag)}<button onclick="removeModalTag('${escHtml(tag)}')" type="button">Ã</button>`;
     wrap.insertBefore(chip, input);
   });
 }
@@ -1651,7 +1668,7 @@ document.addEventListener('keydown', e => {
   if ((e.metaKey||e.ctrlKey) && e.key === 'k') { e.preventDefault(); document.getElementById('search-input').focus(); }
 });
 
-// ─── INIT ─────────────────────────────────────────────────────────────────────
+// âââ INIT âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 render();
 </script>
 </body>
